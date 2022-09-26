@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { TouchableOpacity, StyleSheet, View } from "react-native";
+import { TouchableOpacity, StyleSheet, View, Alert } from "react-native";
 import { Text } from "react-native-paper";
 import Background from "../components/Background";
 import Logo from "../components/Logo";
@@ -10,6 +10,8 @@ import BackButton from "../components/BackButton";
 import { theme } from "../core/theme";
 import { passwordValidator } from "../helpers/passwordValidator";
 import { nameValidator } from "../helpers/nameValidator";
+import { MMKV } from "react-native-mmkv";
+import settings from "../core/settings.json";
 
 export default function LoginScreen({ navigation }) {
   const [name, setName] = useState({ value: "", error: "" });
@@ -29,11 +31,14 @@ export default function LoginScreen({ navigation }) {
       password: password.value,
       usernameOrEmail: name.value,
     };
-    const resp = await fetch("http://localhost:" + "8080" + "/api/auth/login", {
-      headers: { "Content-type": "application/json" },
-      method: "POST",
-      body: JSON.stringify(reqBody),
-    }).catch((error) => {
+    const resp = await fetch(
+      settings.url + settings.puerto + "/api/auth/login",
+      {
+        headers: { "Content-type": "application/json" },
+        method: "POST",
+        body: JSON.stringify(reqBody),
+      }
+    ).catch((error) => {
       console.log(error);
     });
     const salida = await resp.json();
@@ -41,10 +46,11 @@ export default function LoginScreen({ navigation }) {
     console.log(salida);
 
     if (exito === true) {
-      /*const dataLog = salida.data;
-      localStorage.setItem("role", dataLog.role);
-      localStorage.setItem("id", dataLog.id);
-      localStorage.setItem("username", name.value)*/
+      const dataLog = salida.data;
+      MMKV.set("role", dataLog.role);
+      MMKV.set("id", dataLog.id);
+      MMKV.set("username", name.value);
+
       navigation.reset({
         index: 0,
         routes: [{ name: "Dashboard" }],
