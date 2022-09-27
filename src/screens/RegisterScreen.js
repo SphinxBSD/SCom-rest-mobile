@@ -13,6 +13,7 @@ import { passwordValidator } from "../helpers/passwordValidator";
 import { nameValidator } from "../helpers/nameValidator";
 import { namesValidator } from "../helpers/namesValidator";
 import { lastnameValidator } from "../helpers/lastnameValidator";
+import settings from "../core/settings.json";
 
 export default function RegisterScreen({ navigation }) {
   const [name, setName] = useState({ value: "", error: "" });
@@ -59,7 +60,7 @@ export default function RegisterScreen({ navigation }) {
     }
 
     if (password.value === pwdConfirm.value) {
-      fetch("http://localhost:" + "8080" + "/api/customers", {
+      fetch(settings.url + settings.puerto + "/api/customers", {
         headers: { "Content-type": "application/json" },
         method: "POST",
         body: JSON.stringify(reqRegisInfo),
