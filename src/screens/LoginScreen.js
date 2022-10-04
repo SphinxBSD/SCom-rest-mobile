@@ -10,8 +10,8 @@ import BackButton from "../components/BackButton";
 import { theme } from "../core/theme";
 import { passwordValidator } from "../helpers/passwordValidator";
 import { nameValidator } from "../helpers/nameValidator";
-import { MMKV } from "react-native-mmkv";
 import settings from "../core/settings.json";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export default function LoginScreen({ navigation }) {
   const [name, setName] = useState({ value: "", error: "" });
@@ -47,15 +47,21 @@ export default function LoginScreen({ navigation }) {
 
     if (exito === true) {
       const dataLog = salida.data;
-      MMKV.set("role", dataLog.role);
-      MMKV.set("id", dataLog.id);
-      MMKV.set("username", name.value);
-
+      const setData = async () => {
+        try {
+          await AsyncStorage.setItem("role", dataLog.role);
+          await AsyncStorage.setItem("id", dataLog.id);
+          await AsyncStorage.setItem("username", name.value);
+        } catch (error) {
+          Alert.alert("Error", "No se pudo loguear");
+          console.log(error);
+        }
+      };
       navigation.reset({
         index: 0,
         routes: [{ name: "Dashboard" }],
       });
-    } else window.alert("El usuario no se encuentra registrado!");
+    } else Alert.alert("Aviso", "El usuario no se encuentra registrado!");
   };
 
   return (
