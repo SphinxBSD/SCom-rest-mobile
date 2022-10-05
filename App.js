@@ -9,6 +9,8 @@ import {
   RegisterScreen,
   ResetPasswordScreen,
   Dashboard,
+  Chef,
+  Waiter,
 } from "./src/screens";
 
 const Stack = createStackNavigator();
@@ -27,6 +29,8 @@ export default function App() {
           <Stack.Screen name="LoginScreen" component={LoginScreen} />
           <Stack.Screen name="RegisterScreen" component={RegisterScreen} />
           <Stack.Screen name="Dashboard" component={Dashboard} />
+          <Stack.Screen name="Chef" component={Chef} />
+          <Stack.Screen name="Waiter" component={Waiter} />
           <Stack.Screen
             name="ResetPasswordScreen"
             component={ResetPasswordScreen}
