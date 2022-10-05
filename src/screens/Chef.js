@@ -5,11 +5,11 @@ import Header from "../components/Header";
 import Paragraph from "../components/Paragraph";
 import Button from "../components/Button";
 
-export default function Dashboard({ navigation }) {
+export default function Chef({ navigation }) {
   return (
     <Background>
       <Logo />
-      <Header>Pagina cliente</Header>
+      <Header>Pagina Chef</Header>
       <Paragraph>Bienvenido al menu de la pagina</Paragraph>
       <Button
         mode="outlined"

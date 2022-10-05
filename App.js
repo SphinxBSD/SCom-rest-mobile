@@ -9,7 +9,8 @@ import {
   RegisterScreen,
   ResetPasswordScreen,
   Dashboard,
-
+  Chef,
+  Waiter,
 } from "./src/screens";
 import Waiter from './src/screens/Waiter'
 
@@ -29,6 +30,8 @@ export default function App() {
           <Stack.Screen name="LoginScreen" component={Waiter} />
           <Stack.Screen name="RegisterScreen" component={RegisterScreen} />
           <Stack.Screen name="Dashboard" component={Dashboard} />
+          <Stack.Screen name="Chef" component={Chef} />
+          <Stack.Screen name="Waiter" component={Waiter} />
           <Stack.Screen
             name="ResetPasswordScreen"
             component={ResetPasswordScreen}
