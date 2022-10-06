@@ -9,7 +9,7 @@ export default function StartScreen({ navigation }) {
   return (
     <Background>
       <Logo />
-      <Header>Restaurant Cuisine </Header>
+      <Header>Restaurant Cuisinee </Header>
       <Paragraph>Bienvenido a la pagina de inicio de sesion.</Paragraph>
       <Button
         mode="contained"
