@@ -3,11 +3,15 @@ import { StyleSheet, View, TouchableOpacity, Image, Text} from 'react-native-web
 import { getStatusBarHeight } from "react-native-status-bar-height";
 import { theme } from "../core/theme";
 
-export default function HeaderU({ goBack } ) {
+export default function HeaderU({ navigation  } ) {
 
   return (
     <View style={styles.header}>
-        <TouchableOpacity onPress={goBack} style={styles.container}>
+        <TouchableOpacity onPress={() =>
+          navigation.reset({
+            index: 0,
+            routes: [{ name: "StartScreen" }],
+          })} style={styles.container}>
       <Image
         style={styles.image}
         source={require("../assets/back.svg")}
@@ -26,7 +30,7 @@ export default function HeaderU({ goBack } ) {
 
 const styles = StyleSheet.create({
 	header: {
-		height: 50,
+		height: 40,
 		elevation: 8,
 		justifyContent: 'space-between',
 		alignItems: 'center',

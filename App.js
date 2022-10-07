@@ -12,7 +12,7 @@ import {
   Chef,
   Waiter,
 } from "./src/screens";
-import Waiter from './src/screens/Waiter'
+
 
 const Stack = createStackNavigator();
 
@@ -27,7 +27,7 @@ export default function App() {
           }}
         >
           <Stack.Screen name="StartScreen" component={StartScreen} />
-          <Stack.Screen name="LoginScreen" component={Waiter} />
+          <Stack.Screen name="LoginScreen" component={LoginScreen} />
           <Stack.Screen name="RegisterScreen" component={RegisterScreen} />
           <Stack.Screen name="Dashboard" component={Dashboard} />
           <Stack.Screen name="Chef" component={Chef} />
