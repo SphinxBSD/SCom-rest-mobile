@@ -5,12 +5,14 @@ import Header from '../components/Header'
 import Button from '../components/Button'
 import Paragraph from '../components/Paragraph'
 
+
 export default function StartScreen({ navigation }) {
   return (
     <Background>
       <Logo />
-      <Header>Restaurant Cuisinee </Header>
+      <Header>Restaurant Cuisine </Header>
       <Paragraph>Bienvenido a la pagina de inicio de sesion.</Paragraph>
+      
       <Button
         mode="contained"
         onPress={() => navigation.navigate('LoginScreen')}
