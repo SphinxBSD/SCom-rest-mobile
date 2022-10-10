@@ -1,10 +1,12 @@
 import React from "react";
 import Background from "../components/Background";
-import Logo from "../components/Logo";
+//import Logo from "../components/Logo";
 import Header from "../components/Header";
 import Paragraph from "../components/Paragraph";
 import Button from "../components/Button";
 import ListaOrdenes from "../components/chef/ListaOrdenes";
+import ListaPlatos from "../components/chef/ListaPlatos";
+import ListaBebidas from "../components/chef/ListaBebidas";
 
 export default function Chef({ navigation }) {
   return (
@@ -13,6 +15,10 @@ export default function Chef({ navigation }) {
       <Header>Chef</Header>
       <Paragraph>Pedidos facturados</Paragraph>
             <ListaOrdenes/>
+      <Paragraph>Gestionar platos</Paragraph>
+            <ListaPlatos/>
+      <Paragraph>Gestionar bebidas</Paragraph>
+            <ListaBebidas/>
       
       <Button
         mode="outlined"

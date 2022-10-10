@@ -2,24 +2,26 @@ import React, { useState, useEffect } from 'react';
 import { SafeAreaView, View, FlatList, StyleSheet, Text, StatusBar, Image, Alert } from 'react-native';
 import settings from '../../core/settings.json';
 
-import Button from "../../components/Button";
+import Button from "../Button";
 
 
-const Item = ({  id , products}) => (
+const Item = ({  name, url }) => (
 
-  <View style={styles.item}>
  
-    <Text style={styles.name3}>Pedido Nro: {id}</Text>
-      {
-        products.map((name) => (
-          <Text style={styles.name}>Nombre del plato: {name.nameOrBrand}{"\n"}Cantidad: {name.amount}{"\n"}{"\n"}</Text>
-        ))
-      }
+ 
+  <View style={styles.item}>
+    
+    <Image 
+    source={{ uri: url  }}
+    
+    style={styles.image} /> 
+    <Text style={styles.name3}> {name}</Text>
+
 
 
   <Button  style={styles.botonchef}>
 
-  <Text style={styles.name2}>Preparado</Text>
+  <Text style={styles.name2}>Deshabilitar</Text>
        
         
         </Button>
@@ -29,18 +31,12 @@ const Item = ({  id , products}) => (
 );
 
 
-
-
-
-const ListaOrdenes = () => {
-
+const ListaPlatos = () => {
 
   const renderItem = ({ item }) => (
     
-      <Item id={item.id} products={item.products}  />
+      <Item name={item.name} url={item.urlImage}    />
   );
-
-
 
   const p = settings.puerto;
   const u = settings.url;
@@ -51,7 +47,7 @@ const ListaOrdenes = () => {
   
   const obtenerDatos= async() =>
   {
-    const data2 = await fetch(u+p+'/api/orders')
+    const data2 = await fetch(u+p+'/api/foods')
     const platosP = await data2.json()
     setMenuP(platosP)
   }
@@ -75,19 +71,19 @@ const ListaOrdenes = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    width: 200, height: 2000,
+    width: 200, height: 120,
 
   },
   container2: {
     width: 200, height: 167,
-    alignContent: "center",
+    
   },
   item: {
     backgroundColor: '#C3BAB8',
     padding: 20,
     marginVertical: 8,
     marginHorizontal: 16,
-    alignContent: "center",
+  
   },
   name: {
     fontSize: 12,
@@ -98,9 +94,8 @@ const styles = StyleSheet.create({
     lineHeight: 26,
 
   },
-
   name3: {
-    fontSize: 15,
+    fontSize: 16,
     textAlign: "center",
   },
   image: {
@@ -125,4 +120,4 @@ const styles = StyleSheet.create({
 
 });
 
-export default ListaOrdenes;
+export default ListaPlatos;
