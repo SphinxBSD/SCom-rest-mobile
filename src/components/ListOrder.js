@@ -8,18 +8,18 @@ import {
   Alert,
 } from "react-native-web";
 
-const ListOrder = ({ item, getId, setFlag, flag,handleOnClick }) => {
+const ListOrder = ({ item, getId, setFlag, flag,handleOnClick ,handleOnClickdropOrder,handleOnClickdelivered}) => {
   const getContent = () => {
     if (flag) {
       return (
         <>
-          <TouchableOpacity >
+          <TouchableOpacity  onPress={() =>handleOnClickdropOrder(item.id)} >
             <Image
               style={styles.image}
               source={require("../assets/trash.svg")}
             ></Image>
           </TouchableOpacity>
-          <TouchableOpacity onPress={() => getId(item.id)}>
+          <TouchableOpacity onPress={() =>{ handleOnClick(item.id); getId(item.id)}}>
             <Image
               style={styles.image}
               source={require("../assets/send.svg")}
@@ -29,10 +29,10 @@ const ListOrder = ({ item, getId, setFlag, flag,handleOnClick }) => {
       );
     } else {
       return (
-        <TouchableOpacity onPress={() => getId(item.id)}>
+        <TouchableOpacity onPress={() => handleOnClickdelivered(item.id)}>
           <Image
             style={styles.image}
-            source={require("../assets/show.svg")}
+            source={require("../assets/deliver.png")}
           ></Image>
         </TouchableOpacity>
       );
@@ -41,7 +41,7 @@ const ListOrder = ({ item, getId, setFlag, flag,handleOnClick }) => {
 
   return (
     <View style={styles.container}>
-      <Text> pedido</Text>
+      <Text> pedido {item.id}</Text>
 
       {getContent()}
     </View>

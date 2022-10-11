@@ -8,7 +8,7 @@ import {
   } from "react-native-web";
   import ListFood from "./ListFood";
 
-function FoodOrder({foods,drinks, flagFood,setCont,cont}) {
+function FoodOrder({foods,drinks, flagFood,setCont,cont, id}) {
     
   return (
 
@@ -16,7 +16,7 @@ function FoodOrder({foods,drinks, flagFood,setCont,cont}) {
         <FlatList
           data={flagFood? foods:drinks}
           keyExtractor={(item) => item.id}
-          renderItem={(item) => <ListFood item={item.item} setCont={setCont} cont={cont} flagFood={flagFood}/>}
+          renderItem={(item) => <ListFood item={item.item} setCont={setCont} cont={cont} flagFood={flagFood}  id={id}/>}
           style={styles.list}
           horizontal
         />

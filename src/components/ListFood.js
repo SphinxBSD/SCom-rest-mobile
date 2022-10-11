@@ -1,4 +1,5 @@
 import React from "react";
+import settings from "../core/settings.json";
 import {
   StyleSheet,
   View,
@@ -8,7 +9,42 @@ import {
   Alert,
 } from "react-native-web";
 
-const ListFood = ({ item, setCont, cont ,flagFood}) => {
+const ListFood = ({ item, setCont, cont ,flagFood, id}) => {
+  const putData = async ( dato) =>{
+    let url = settings.url + settings.puerto + "/api/orders/"+id;
+    const response = await fetch(url, {
+        method: 'PUT', 
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(dato)
+    });
+ 
+   const data = await response.json( );
+    console.log(data);
+ };
+
+  const addValue=(idm)=>{
+    console.log("id pedido:"+idm);
+    let dato={
+      "products":[{
+      "amount": cont,
+      "id": id
+      }
+      ]
+    }
+    if(idm=!null){
+  
+      putData(dato);
+      console.log(dato);
+      
+      setCont(0)
+    }else{
+      console.log("error id incorrecto");
+    }
+
+
+  }
   return (
     <View style={styles.container}>
       <Image style={styles.image} source={item.urlImage}></Image>
@@ -32,7 +68,7 @@ const ListFood = ({ item, setCont, cont ,flagFood}) => {
         </View>
         <View style={styles.containerButton}>
     
-          <TouchableOpacity>
+          <TouchableOpacity onPress={() => addValue(item.id)}>
             <Image
               style={styles.imageB}
               source={require("../assets/send.svg")}

@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import Header from "../components/HeaderU";
 import Order from "../components/Order";
 import settings from "../core/settings.json";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import {
   StyleSheet,
   View,
@@ -19,16 +20,59 @@ export default function Waiter({ navigation }) {
   const [flagFood, setflagFood] = useState(true);
   const [foods, setFoods] = useState([]);
   const [drinks, setDrinks] = useState([]);
+  const [foodP, setFoodP] = useState([]);
   const [cont, setCont] = useState(0);
 
+
+
+  const deleteData = async (id ) =>{
+    let url = settings.url + settings.puerto + "/api/orders/"+id;
+    const response = await fetch(url, {
+        method: 'DELETE'
+    });
+ 
+   const data = await response.json( );
+    console.log(data);
+
+ };
   const handleOnClickdropOrder = (id) => {
-    console.log(rest);
+    
+    deleteData(id);
+    (async()=>{
+      await getDatas();
+    })();
     console.log("id" + id);
+  };
+
+  const fetchPatchRequest = async (url) => {
+    const response = await fetch(url, {
+        method: 'PATCH',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(null),
+    });
+    return response.json();
+}
+
+
+const handleOnClickdelivered = (id) => {
+  let url = settings.url + settings.puerto + "/api/orders/"+id+"?flag=delivered&value=true";
+  fetchPatchRequest(url);
+};
+
+  const handleOnClickConfirOrder = (id) => {
+    let url = settings.url + settings.puerto + "/api/orders/"+id+"?flag=confirmed&value=true";
+    fetchPatchRequest(url);
+    console.log("hola");
+    console.log("id" + id);
+    setFlag(true)
+
   };
 
   const getDatas = async () => {
     const options = { method: "GET" };
-    let url = settings.url + settings.puerto + "/api/orders";
+    let url = settings.url + settings.puerto + "/api/waiters/"+16+"/orders/pending";
     const response = await fetch(url, options);
     const data = await response.json();
 
@@ -56,10 +100,23 @@ export default function Waiter({ navigation }) {
     setDrinks(data);
   };
 
+  const getFoodP = async () => {
+    const options = { method: "GET" };
+    let url = settings.url + settings.puerto + "/api/waiters/"+16+"/orders/all-prepared";
+    const response = await fetch(url, options);
+    const data = await response.json();
+
+    console.log(data);
+    setFoodP(data);
+  };
+
+  
+
   useEffect(() => {
     getDatas();
     getFoods();
     getDrinks();
+    getFoodP();
   }, []);
 
   const [id, setId] = useState(null);
@@ -84,7 +141,7 @@ export default function Waiter({ navigation }) {
       <Header navigation={navigation}></Header>
       <View style={styles.containerPhone}>
         <View style={styles.containerButon}>
-          <TouchableOpacity>
+          <TouchableOpacity onPress={() => getDatas()}>
             <Image
               style={styles.image}
               source={require("../assets/update.png")}
@@ -98,27 +155,16 @@ export default function Waiter({ navigation }) {
           getId={getId}
           setFlag={setFlag}
           flag={true}
-          handleOnClick={handleOnClickdropOrder}
+          handleOnClick={handleOnClickConfirOrder}
+          handleOnClickdropOrder={handleOnClickdropOrder}
         ></Order>
-        <View style={styles.containerButon}>
-          <TouchableOpacity>
-            <Image
-              style={styles.image}
-              source={require("../assets/update.png")}
-            ></Image>
-          </TouchableOpacity>
-        </View>
-        <Text style={styles.title}>PEDIDOS CONFIRMADOS</Text>
-        <Order
-          orders={orders}
-          setOrders={setOrders}
-          getId={getId}
-          setFlag={setFlag}
-          flag={false}
-        ></Order>
+
+
         <View style={styles.container}>
+
           <View style={styles.containerPedido}>
-            <Text style={styles.title}>CATEGORIA</Text>
+
+            <Text style={styles.title}>PEDIDO {id}</Text>
             <TouchableOpacity onPress={() => setflagFood(!flagFood)}>
               <Image
                 style={styles.imageP}
@@ -133,11 +179,26 @@ export default function Waiter({ navigation }) {
             </TouchableOpacity>
           </View>
           <View style={styles.containerOrder}>
-            <FoodOrder foods={foods} drinks={drinks} flagFood={flagFood} setCont={setCont} cont={cont}/>
+            <FoodOrder foods={foods} drinks={drinks} flagFood={flagFood} setCont={setCont} cont={cont}  id={id}/>
           </View>
         </View>
-
-        <View style={styles.containerPro} >{getContent()}</View>
+        <View style={styles.containerButon}>
+          <TouchableOpacity onPress={() => getFoodP()}>
+            <Image
+              style={styles.image}
+              source={require("../assets/update.png")}
+            ></Image>
+          </TouchableOpacity>
+        </View>
+        <Text style={styles.title}>PEDIDOS A ENTREGAR</Text>
+        <Order
+          orders={foodP}
+          setOrders={setFoodP}
+          getId={getId}
+          setFlag={setFlag}
+          flag={false}
+          handleOnClickdelivered={handleOnClickdelivered}
+        ></Order>
       </View>
     </>
   );
@@ -155,7 +216,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#FDFEFE",
     width: "100%",
     maxWidth: 340,
-    height: "30%",
+    height: "35%",
     padding: 5,
     marginTop: 10,
   },
@@ -191,8 +252,5 @@ const styles = StyleSheet.create({
     borderRadius: 10,
 
   },
-  containerPro:{
-    height: "25%",
-    backgroundColor: "#FDFEFE",
-  },
+
 });
