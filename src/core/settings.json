@@ -1,5 +1,5 @@
 {
   "puerto": "8080",
-  "url": "http://localhost:",
+  "url": "http://192.168.0.13:",
   "ignorarMP": "8080"
 }
