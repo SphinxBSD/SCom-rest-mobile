@@ -22,7 +22,7 @@ export default function DrinkCart() {
   );
 
   const renderItem = ({ item }) => (
-    <Item name={item.name} url={item.urlImage} price={item.price} />
+    <Item name={item.brand} url={item.urlImage} price={item.price} />
   );
 
   const p = settings.puerto;

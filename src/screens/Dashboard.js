@@ -4,8 +4,8 @@ import Logo from "../components/Logo";
 import Paragraph from "../components/Paragraph";
 import Button from "../components/Button";
 import HeaderIni from "../components/HeaderIni";
-import FoodCart from "../components/FoodCart";
-import DrinkCart from "../components/DrinkCart";
+import NavigatorCart from "../components/NavigatorCart";
+import RequestStock from "../components/RequestStock";
 
 export default function Dashboard({ navigation }) {
   return (
@@ -13,7 +13,9 @@ export default function Dashboard({ navigation }) {
       <HeaderIni />
       <Logo />
       <Paragraph>Bienvenido al menu de la pagina</Paragraph>
-      <DrinkCart />
+
+      <NavigatorCart />
+
       <Button
         mode="outlined"
         onPress={() =>
