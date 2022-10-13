@@ -4,38 +4,72 @@ import settings from '../../core/settings.json';
 
 import Button from "../Button";
 
+function platoverf(props) {
 
-const Item = ({  name, url }) => (
-
- 
- 
-  <View style={styles.item}>
+  if (props.available) {  
+    return ( <View style={styles.item}>
     
-    <Image 
-    source={{ uri: url  }}
+      <Image 
+      source={{ uri: props.url  }}
+      
+      style={styles.image} /> 
+      <Text style={styles.name3}> {props.name}</Text>
+  
+  
+
+    <Button  style={styles.botonchef} onPress={async() => {
+  const idd = props.id;
+    const deshab = {
+      available: false,
+      id: idd
+    };
+   
+    await fetch(
+      settings.url + settings.puerto + "/api/products/"+idd,
+      {
+        method: 'PATCH',
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(deshab),
+     
+  
+  
+      } ).catch((error) => {
+      console.log(error);
+    });
     
-    style={styles.image} /> 
-    <Text style={styles.name3}> {name}</Text>
 
+      let vista = "Dashboard";
+      vista = "Chef";
+      props.nav.reset({
+        index: 0,
+        routes: [{ name: vista }],
+      });
+    
+  
+    }}>
+  
+    <Text style={styles.name2}>Deshabilitar</Text>
+         
+          
+          </Button>
+   
+  
+    </View>);
+  }
+ 
+}
 
+const Item = ({  id,name, url ,available ,nav}) => (
 
-  <Button  style={styles.botonchef}>
-
-  <Text style={styles.name2}>Deshabilitar</Text>
-       
-        
-        </Button>
+  platoverf({id:id,name:name,url:url,available:available,nav:nav}));
  
 
-  </View>
-);
 
-
-const ListaBebidas = () => {
-
+const ListaBebidas = (props) => {
+  const nn = props.nav;
   const renderItem = ({ item }) => (
     
-      <Item name={item.brand} url={item.urlImage}    />
+    <Item id={item.id} name={item.brand} url={item.urlImage} available={item.available} nav={nn}/>
   );
 
   const p = settings.puerto;

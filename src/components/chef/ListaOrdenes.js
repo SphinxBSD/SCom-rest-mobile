@@ -4,8 +4,18 @@ import settings from '../../core/settings.json';
 
 import Button from "../../components/Button";
 
+const fetchPatchRequest = async (url) => {
+  const response = await fetch(url, {
+      method: 'PATCH',
+      headers: {
+          'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(null),
+  });
+  return response.json();
+}
 
-const Item = ({  id , products}) => (
+const Item = ({  id , products,nnn}) => (
 
   <View style={styles.item}>
  
@@ -13,8 +23,9 @@ const Item = ({  id , products}) => (
       {
         products.map((name) => (
 
-       
-            <Text style={styles.name}>Nombre del plato: {name.nameOrBrand}{"\n"}Cantidad: {name.amount}{"\n"}{"\n"}</Text>
+
+
+            <Text style={styles.name}>Nombre del producto: {name.nameOrBrand}{"\n"}Cantidad: {name.amount}{"\n"}{"\n"}</Text>
           
 
           
@@ -22,9 +33,25 @@ const Item = ({  id , products}) => (
       }
 
 
-  <Button  style={styles.botonchef}>
+  <Button  style={styles.botonchef} onPress={async() => {
+  const idd = id;
 
-  <Text style={styles.name2}>Preparado</Text>
+      let url = settings.url + settings.puerto + "/api/orders/"+idd+"?flag=prepared&value=true";
+      fetchPatchRequest(url);
+
+  
+    
+      let vista = "Dashboard";
+      vista = "Chef";
+      nnn.reset({
+        index: 0,
+        routes: [{ name: vista }],
+      });
+    
+  
+    }}>
+
+  <Text style={styles.name2}>Preparar</Text>
        
         
         </Button>
@@ -37,12 +64,12 @@ const Item = ({  id , products}) => (
 
 
 
-const ListaOrdenes = () => {
+const ListaOrdenes = (props) => {
 
-
+const nn = props.nav;
   const renderItem = ({ item }) => (
     
-      <Item id={item.id} products={item.products}  />
+      <Item id={item.id} products={item.products} nnn={nn} />
   );
 
 
@@ -69,7 +96,7 @@ const ListaOrdenes = () => {
         data={menuP}
         renderItem={renderItem}
         keyExtractor={item => item.id}
-        
+     
       />
       </View>
     </SafeAreaView>
