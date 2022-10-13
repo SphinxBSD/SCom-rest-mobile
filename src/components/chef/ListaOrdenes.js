@@ -12,7 +12,12 @@ const Item = ({  id , products}) => (
     <Text style={styles.name3}>Pedido Nro: {id}</Text>
       {
         products.map((name) => (
-          <Text style={styles.name}>Nombre del plato: {name.nameOrBrand}{"\n"}Cantidad: {name.amount}{"\n"}{"\n"}</Text>
+
+       
+            <Text style={styles.name}>Nombre del plato: {name.nameOrBrand}{"\n"}Cantidad: {name.amount}{"\n"}{"\n"}</Text>
+          
+
+          
         ))
       }
 
@@ -51,7 +56,7 @@ const ListaOrdenes = () => {
   
   const obtenerDatos= async() =>
   {
-    const data2 = await fetch(u+p+'/api/orders')
+    const data2 = await fetch(u+p+'/api/orders/billed-undelivered')
     const platosP = await data2.json()
     setMenuP(platosP)
   }
@@ -75,7 +80,7 @@ const ListaOrdenes = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    width: 200, height: 2000,
+    width: 200, height: 120,
 
   },
   container2: {

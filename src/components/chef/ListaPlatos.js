@@ -5,7 +5,10 @@ import settings from '../../core/settings.json';
 import Button from "../Button";
 
 
-const Item = ({  name, url }) => (
+  
+
+
+const Item = ({  id,name, url }) => (
 
  
  
@@ -19,7 +22,38 @@ const Item = ({  name, url }) => (
 
 
 
-  <Button  style={styles.botonchef}>
+  <Button  style={styles.botonchef} onPress={async() => {
+const idd = id;
+  const deshab = {
+    available: false,
+    id: idd
+  };
+ 
+  const resp = await fetch(
+    settings.url + settings.puerto + "/api/products/"+idd,
+    {
+      method: 'PATCH',
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(deshab),
+   
+
+
+    } ).catch((error) => {
+    console.log(error);
+  });
+  const salida = await resp.json();
+  const exito = salida.success;
+
+  if (exito === true) {
+    let vista = "Dashboard";
+    vista = "Chef";
+    navigation.reset({
+      index: 0,
+      routes: [{ name: vista }],
+    });
+  }
+
+  }}>
 
   <Text style={styles.name2}>Deshabilitar</Text>
        
@@ -35,7 +69,7 @@ const ListaPlatos = () => {
 
   const renderItem = ({ item }) => (
     
-      <Item name={item.name} url={item.urlImage}    />
+      <Item id={item.id} name={item.name} url={item.urlImage}    />
   );
 
   const p = settings.puerto;
