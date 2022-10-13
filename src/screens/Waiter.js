@@ -17,12 +17,12 @@ import FoodOrder from "../components/FoodOrder";
 export default function Waiter({ navigation }) {
   const [orders, setOrders] = useState([]);
   const [flag, setFlag] = useState(true);
-  const [flagFood, setflagFood] = useState(true);
+  const [flagFood, setflagFood] = useState("food");
   const [foods, setFoods] = useState([]);
   const [drinks, setDrinks] = useState([]);
   const [foodP, setFoodP] = useState([]);
   const [cont, setCont] = useState(0);
-
+  
 
 
   const deleteData = async (id ) =>{
@@ -72,7 +72,7 @@ const handleOnClickdelivered = (id) => {
 
   const getDatas = async () => {
     const options = { method: "GET" };
-    let url = settings.url + settings.puerto + "/api/waiters/"+16+"/orders/pending";
+    let url = settings.url + settings.puerto + "/api/waiters/"+( await AsyncStorage.getItem("id"))+"/orders/pending";
     const response = await fetch(url, options);
     const data = await response.json();
 
@@ -102,7 +102,7 @@ const handleOnClickdelivered = (id) => {
 
   const getFoodP = async () => {
     const options = { method: "GET" };
-    let url = settings.url + settings.puerto + "/api/waiters/"+16+"/orders/all-prepared";
+    let url = settings.url + settings.puerto + "/api/waiters/"+( await AsyncStorage.getItem("id"))+"/orders/all-prepared";
     const response = await fetch(url, options);
     const data = await response.json();
 
@@ -117,6 +117,7 @@ const handleOnClickdelivered = (id) => {
     getFoods();
     getDrinks();
     getFoodP();
+
   }, []);
 
   const [id, setId] = useState(null);
@@ -165,17 +166,18 @@ const handleOnClickdelivered = (id) => {
           <View style={styles.containerPedido}>
 
             <Text style={styles.title}>PEDIDO {id}</Text>
-            <TouchableOpacity onPress={() => setflagFood(!flagFood)}>
+            <TouchableOpacity onPress={() =>{setflagFood("food");}}>
               <Image
                 style={styles.imageP}
                 source={require("../assets/food.png")}
               ></Image>
             </TouchableOpacity>
-            <TouchableOpacity onPress={() => setflagFood(!flagFood)}>
+            <TouchableOpacity onPress={() => setflagFood("drink")}>
               <Image
                 style={styles.imageP}
                 source={require("../assets/drink.png")}
               ></Image>
+            
             </TouchableOpacity>
           </View>
           <View style={styles.containerOrder}>

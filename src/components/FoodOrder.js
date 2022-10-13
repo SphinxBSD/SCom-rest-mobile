@@ -14,7 +14,7 @@ function FoodOrder({foods,drinks, flagFood,setCont,cont, id}) {
 
       <View style={styles.container}>
         <FlatList
-          data={flagFood? foods:drinks}
+          data={flagFood==="food"? foods:drinks}
           keyExtractor={(item) => item.id}
           renderItem={(item) => <ListFood item={item.item} setCont={setCont} cont={cont} flagFood={flagFood}  id={id}/>}
           style={styles.list}

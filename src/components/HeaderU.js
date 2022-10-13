@@ -2,9 +2,12 @@ import React from 'react'
 import { StyleSheet, View, TouchableOpacity, Image, Text} from 'react-native-web'
 import { getStatusBarHeight } from "react-native-status-bar-height";
 import { theme } from "../core/theme";
-
+import AsyncStorage from "@react-native-async-storage/async-storage";
 export default function HeaderU({ navigation  } ) {
-
+  
+  /*let name="";
+  AsyncStorage.getItem("username").then((e)=>{name=e});
+  console.log(name);*/
   return (
     <View style={styles.header}>
         <TouchableOpacity onPress={() =>
@@ -17,7 +20,7 @@ export default function HeaderU({ navigation  } ) {
         source={require("../assets/back.svg")}
       ></Image>
     </TouchableOpacity>
-    <Text style={styles.text}>name</Text>
+    <Text style={styles.text}>{name}</Text>
     <Image
         style={styles.image}
         source={require("../assets/icon.svg")}

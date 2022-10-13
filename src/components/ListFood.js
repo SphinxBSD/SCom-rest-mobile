@@ -49,7 +49,7 @@ const ListFood = ({ item, setCont, cont ,flagFood, id}) => {
     <View style={styles.container}>
       <Image style={styles.image} source={item.urlImage}></Image>
       <View style={styles.containerDatos}>
-        <Text style={{fontSize:18,fontWeight: 600,marginBotton:10 , color:"white"}}>{ flagFood? item.name:item.brand}</Text>
+        <Text style={{fontSize:18,fontWeight: 600,marginBotton:10 , color:"white"}}>{ flagFood==="food"? item.name:item.brand}</Text>
         <Text style={{fontSize:15,fontWeight: 500, color:"white"}}> Precio: {item.price} Bs</Text>
         <View style={styles.containerButton}>
           <TouchableOpacity onPress={() => setCont(cont+1)}>
