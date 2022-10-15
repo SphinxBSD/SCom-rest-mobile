@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { SafeAreaView, View, FlatList, StyleSheet, Text, StatusBar, Image, Alert } from 'react-native';
 import settings from '../../core/settings.json';
 
-import Button from "../Button";
+import Buttonc from './Botonnn';
 
 function platoverf(props) {
 
@@ -18,7 +18,7 @@ function platoverf(props) {
   
   
 
-    <Button  style={styles.botonchef} onPress={async() => {
+    <Buttonc  style={styles.botonchef} onPress={async() => {
   const idd = props.id;
     const deshab = {
       available: false,
@@ -47,12 +47,12 @@ function platoverf(props) {
       });
     
   
-    }}>
+    }}
   
-    <Text style={styles.name2}>Deshabilitar</Text>
+    title="Deshabilitar"
          
           
-          </Button>
+          />
    
   
     </View>);
@@ -98,7 +98,7 @@ const ListaPlatos = (props) => {
         data={menuP}
         renderItem={renderItem}
         keyExtractor={item => item.id}
-        
+        horizontal={true}
       />
       </View>
     </SafeAreaView>
@@ -113,7 +113,7 @@ const styles = StyleSheet.create({
 
   },
   container2: {
-    width: 200, height: 167,
+    width: 200, height: 220,
     
   },
   item: {

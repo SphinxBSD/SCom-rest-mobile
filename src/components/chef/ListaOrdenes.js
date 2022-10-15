@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { SafeAreaView, View, FlatList, StyleSheet, Text, StatusBar, Image, Alert } from 'react-native';
+import { SafeAreaView, View, FlatList, StyleSheet, Text } from 'react-native';
 import settings from '../../core/settings.json';
 
-import Button from "../../components/Button";
+import Buttonc from './Botonnn';
 
 const fetchPatchRequest = async (url) => {
   const response = await fetch(url, {
@@ -21,11 +21,11 @@ const Item = ({  id , products,nnn}) => (
  
     <Text style={styles.name3}>Pedido Nro: {id}</Text>
       {
-        products.map((name) => (
+        products.map((name,  index) => (
 
 
 
-            <Text style={styles.name}>Nombre del producto: {name.nameOrBrand}{"\n"}Cantidad: {name.amount}{"\n"}{"\n"}</Text>
+            <Text key={index} style={styles.name}>Producto: {name.nameOrBrand}{"\n"}Cantidad: {name.amount}{"\n"}{"\n"}</Text>
           
 
           
@@ -33,7 +33,10 @@ const Item = ({  id , products,nnn}) => (
       }
 
 
-  <Button  style={styles.botonchef} onPress={async() => {
+  
+
+
+  <Buttonc  style={styles.botonchef} onPress={async() => {
   const idd = id;
 
       let url = settings.url + settings.puerto + "/api/orders/"+idd+"?flag=prepared&value=true";
@@ -49,15 +52,16 @@ const Item = ({  id , products,nnn}) => (
       });
     
   
-    }}>
+    }}
 
-  <Text style={styles.name2}>Preparar</Text>
-       
+   
+    title="Preparar"
         
-        </Button>
- 
 
-  </View>
+     />
+ 
+ 
+        </View>
 );
 
 
@@ -69,7 +73,7 @@ const ListaOrdenes = (props) => {
 const nn = props.nav;
   const renderItem = ({ item }) => (
     
-      <Item id={item.id} products={item.products} nnn={nn} />
+      <Item id={item.id} products={item.products} nnn={nn}  />
   );
 
 
@@ -96,7 +100,7 @@ const nn = props.nav;
         data={menuP}
         renderItem={renderItem}
         keyExtractor={item => item.id}
-     
+      
       />
       </View>
     </SafeAreaView>
@@ -148,7 +152,8 @@ const styles = StyleSheet.create({
     paddingVertical: 0,
   
  textAlignVertical:"top",
- alignContent:"top",
+ alignContent:"center",
+ alignItems:'center',
     borderColor:'black',
     borderWidth:2,
   

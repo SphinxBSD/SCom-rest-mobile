@@ -4,10 +4,12 @@ import Background from "../components/Background";
 import Header from "../components/Header";
 import Paragraph from "../components/Paragraph";
 import Button from "../components/Button";
-import Button2 from "../components/chef/Button";
+import Button2 from "../components/chef/Botonnn";
 import ListaOrdenes from "../components/chef/ListaOrdenes";
 import ListaPlatos from "../components/chef/ListaPlatos";
 import ListaBebidas from "../components/chef/ListaBebidas";
+import SolicitarIng from "../components/chef/SolicitarIng";
+
 import { Text } from 'react-native';
 export default function Chef({ navigation }) {
   return (
@@ -20,7 +22,13 @@ export default function Chef({ navigation }) {
             <ListaPlatos nav={navigation}/>
       <Paragraph>{"\n"}Gestionar bebidas</Paragraph>
             <ListaBebidas nav={navigation}/>
+
+      <Paragraph>{"\n"}Gestionar ingredientes</Paragraph>
+        
+<SolicitarIng/>
+
       <Text>{"\n"}</Text>
+
             <Button2
         mode="outlined"
         onPress={() =>
@@ -29,9 +37,11 @@ export default function Chef({ navigation }) {
             routes: [{ name: "Chef" }],
           })
         }
-      >
-        Actualizar
-      </Button2>
+        title="Actualizar"
+      />
+
+
+   
 
 
       <Button
