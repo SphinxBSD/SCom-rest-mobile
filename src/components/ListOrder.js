@@ -13,13 +13,19 @@ const ListOrder = ({ item, getId, setFlag, flag,handleOnClick ,handleOnClickdrop
     if (flag) {
       return (
         <>
+         <TouchableOpacity  onPress={() =>getId(item.id)} >
+            <Image
+              style={styles.image}
+              source={require("../assets/show.svg")}
+            ></Image>
+          </TouchableOpacity>
           <TouchableOpacity  onPress={() =>handleOnClickdropOrder(item.id)} >
             <Image
               style={styles.image}
               source={require("../assets/trash.svg")}
             ></Image>
           </TouchableOpacity>
-          <TouchableOpacity onPress={() =>{ handleOnClick(item.id); getId(item.id)}}>
+          <TouchableOpacity onPress={() =>{ handleOnClick(item.id)}}>
             <Image
               style={styles.image}
               source={require("../assets/send.svg")}
