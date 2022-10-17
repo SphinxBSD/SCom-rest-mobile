@@ -87,7 +87,7 @@ const nn = props.nav;
   
   const obtenerDatos= async() =>
   {
-    const data2 = await fetch(u+p+'/api/orders/billed-undelivered')
+    const data2 = await fetch(u+p+'/api/orders/all-confirmed')
     const platosP = await data2.json()
     setMenuP(platosP)
   }
@@ -117,6 +117,7 @@ const styles = StyleSheet.create({
   container2: {
     width: 200, height: 167,
     alignContent: "center",
+    backgroundColor:"#736969",
   },
   item: {
     backgroundColor: '#C3BAB8',

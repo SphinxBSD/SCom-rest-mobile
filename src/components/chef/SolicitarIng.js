@@ -1,10 +1,98 @@
 import React, { useState } from "react";
 import { Alert, Modal, StyleSheet, Text, Pressable, View, TextInput  } from "react-native";
+import settings from '../../core/settings.json';
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import Buttonc from './Botonnn';
 
-const SolicitarIng = () => {
+const SolicitarIng = (props) => {
   const [modalVisible, setModalVisible] = useState(false);
   const [ onChangeText] = React.useState(null);
 
+  var arrayId  = new Array();
+  var arrayAmount = new Array();
+
+  var arrayAmountN   = new Array();
+  var arrayName   = new Array();
+  var arrayPrice   = new Array();
+  var arrayStock   = new Array();
+  
+  arrayId[0] = 1;
+  arrayId[1] = 2;
+
+  
+  arrayAmount[0] = 2;
+  arrayAmount[1] = 2;
+ 
+  
+  arrayAmountN[0] = 500;
+  arrayName[0] = "aba";
+  arrayPrice[0] = 13.49;
+  arrayStock[0] = 0;
+
+  var ingredients  = [];
+  var newIngredients  = [];
+  var objeto = {};
+  
+  for(var i= 0; i < arrayId.length; i++) {
+  
+    ingredients.push({ 
+      "amount"  : arrayAmount[i],
+          "id"    : arrayId[i]  
+      });
+  }
+  for(var i= 0; i < arrayAmountN.length; i++) {
+  
+    newIngredients.push({ 
+       
+         "amount"    : arrayAmountN[i],
+         "name"    : arrayName[i],
+         "price"    : arrayPrice[i],
+         "stock"    : arrayStock[i],
+     });
+ }
+
+  const solicitarIngredientes = async() =>{
+const idChef = await AsyncStorage.getItem("id");
+
+
+ objeto.chefId = idChef;
+  objeto.ingredients = ingredients;
+  objeto.newIngredients = newIngredients;
+
+  const pruebaJson = JSON.stringify(objeto)
+  console.log(pruebaJson);
+
+  
+    await fetch(
+       settings.url + settings.puerto + "/api/ingredients/request",
+       {
+         method: 'POST',
+         
+         body: JSON.stringify(objeto),
+
+         headers: { "Content-Type": "application/json" },
+       } ).catch((error) => {
+       console.log(error);
+     });
+ 
+     
+       let vista = "Dashboard";
+       vista = "Chef";
+       props.nav.reset({
+         index: 0,
+         routes: [{ name: vista }],
+       });
+     
+   
+     
+  }
+
+ 
+
+
+
+ 
+  
   return (
     <View style={styles.centeredView}>
       <Modal
@@ -62,12 +150,25 @@ const SolicitarIng = () => {
       </Modal>
 
 
-      <Pressable
-        style={[styles.button, styles.buttonOpen]}
+      <Buttonc
+    
         onPress={() => setModalVisible(true)}
-      >
-        <Text style={styles.textStyle}>Adicionar nuevo ingrediente</Text>
-      </Pressable>
+        title = "Añadir ingrediente a la solicitud"
+      />
+       
+
+      <Text style={styles.modalText2}>{"\n"}Lista de ingredientes solicitados{"\n"}{"\n"}</Text>
+
+      <Buttonc
+        
+        onPress={solicitarIngredientes}
+        title = "Solicitar ingredientes"
+
+      />
+   
+      
+
+
     </View>
 
 
@@ -133,7 +234,7 @@ const styles = StyleSheet.create({
     textAlign: "left"
   },
   input: {
-    height: 40,
+    height: 35,
     margin: 7,
     borderWidth: 1,
     padding: 10,

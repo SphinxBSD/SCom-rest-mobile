@@ -9,6 +9,7 @@ import ListaOrdenes from "../components/chef/ListaOrdenes";
 import ListaPlatos from "../components/chef/ListaPlatos";
 import ListaBebidas from "../components/chef/ListaBebidas";
 import SolicitarIng from "../components/chef/SolicitarIng";
+import ListaIngredientes from "../components/chef/ListaIngredientes";
 
 import { Text } from 'react-native';
 export default function Chef({ navigation }) {
@@ -16,16 +17,21 @@ export default function Chef({ navigation }) {
     <Background>
   
       <Header>Chef</Header>
-      <Paragraph>Pedidos facturados</Paragraph>
+      <Paragraph>Pedidos confirmados</Paragraph>
             <ListaOrdenes nav={navigation}/>
       <Paragraph>{"\n"}Gestionar platos</Paragraph>
             <ListaPlatos nav={navigation}/>
       <Paragraph>{"\n"}Gestionar bebidas</Paragraph>
             <ListaBebidas nav={navigation}/>
 
+    
+
       <Paragraph>{"\n"}Gestionar ingredientes</Paragraph>
         
-<SolicitarIng/>
+<SolicitarIng nav={navigation}/>
+
+<Paragraph>{"\n"}Lista de ingredientes</Paragraph>
+            <ListaIngredientes nav={navigation}/>
 
       <Text>{"\n"}</Text>
 

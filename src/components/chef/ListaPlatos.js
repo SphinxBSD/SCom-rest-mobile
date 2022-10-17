@@ -114,6 +114,7 @@ const styles = StyleSheet.create({
   },
   container2: {
     width: 200, height: 220,
+    backgroundColor:"#736969",
     
   },
   item: {

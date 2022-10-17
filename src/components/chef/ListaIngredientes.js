@@ -2,75 +2,35 @@ import React, { useState, useEffect } from 'react';
 import { SafeAreaView, View, FlatList, StyleSheet, Text, StatusBar, Image, Alert } from 'react-native';
 import settings from '../../core/settings.json';
 
-import Buttonc from './Botonnn';
 
-function platoverf(props) {
 
-  if (props.available) {  
+function ingredientt(props) {
+
+
+ 
     return ( <View style={styles.item}>
     
-      <Image 
-      source={{ uri: props.url  }}
-      
-      style={styles.image} /> 
-      <Text style={styles.name3}> {props.name}</Text>
-  
-  
-
-    <Buttonc  style={styles.botonchef} onPress={async() => {
-  const idd = props.id;
-    const deshab = {
-      available: false,
-      id: idd
-    };
-   
-    await fetch(
-      settings.url + settings.puerto + "/api/products/"+idd,
-      {
-        method: 'PATCH',
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(deshab),
-     
-  
-  
-      } ).catch((error) => {
-      console.log(error);
-    });
     
-
-      let vista = "Dashboard";
-      vista = "Chef";
-      props.nav.reset({
-        index: 0,
-        routes: [{ name: vista }],
-      });
-    
-  
-    }}
-  
-    title="Deshabilitar"
-         
-          
-          />
-   
-  
+      <Text style={styles.name3}>Nombre: {props.name}  </Text>
+      <Text style={styles.name3}>Stock: {props.stock}</Text>
+      <Text style={styles.name3}>Precio: {props.price}</Text>
     </View>);
-  }
+  
  
 }
 
-const Item = ({  id,name, url ,available ,nav}) => (
+const Item = ({  id,name, stock ,price}) => (
+ingredientt({id:id,name:name,stock:stock,price:price}));
 
-  platoverf({id:id,name:name,url:url,available:available,nav:nav}));
  
 
 
-const ListaBebidas = (props) => {
-  const nn = props.nav;
+
+const ListaIngredientes = () => {
+
   const renderItem = ({ item }) => (
     
-    <Item id={item.id} name={item.brand} url={item.urlImage} available={item.available} nav={nn}  
-    />
+      <Item id={item.id} name={item.name} stock={item.stock} price={item.price} />
   );
 
   const p = settings.puerto;
@@ -82,7 +42,7 @@ const ListaBebidas = (props) => {
   
   const obtenerDatos= async() =>
   {
-    const data2 = await fetch(u+p+'/api/drinks')
+    const data2 = await fetch(u+p+'/api/ingredients')
     const platosP = await data2.json()
     setMenuP(platosP)
   }
@@ -95,7 +55,7 @@ const ListaBebidas = (props) => {
         data={menuP}
         renderItem={renderItem}
         keyExtractor={item => item.id}
-        horizontal={true}
+      
       />
       </View>
     </SafeAreaView>
@@ -106,12 +66,13 @@ const ListaBebidas = (props) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    width: 200, height: 120,
+    width: 300, height: 120,
 
   },
   container2: {
-    width: 200, height: 220,
+    width: 300, height: 220,
     backgroundColor:"#736969",
+    
   },
   item: {
     backgroundColor: '#C3BAB8',
@@ -127,6 +88,7 @@ const styles = StyleSheet.create({
   name2: {
     fontSize: 11,
     lineHeight: 26,
+
   },
   name3: {
     fontSize: 16,
@@ -154,4 +116,4 @@ const styles = StyleSheet.create({
 
 });
 
-export default ListaBebidas;
+export default ListaIngredientes;
