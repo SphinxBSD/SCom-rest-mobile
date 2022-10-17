@@ -66,11 +66,11 @@ const ListaIngredientes = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    width: 300, height: 120,
+    width: 280, height: 120,
 
   },
   container2: {
-    width: 300, height: 220,
+    width: 280, height: 220,
     backgroundColor:"#736969",
     
   },

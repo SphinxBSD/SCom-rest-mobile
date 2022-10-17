@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Alert, Modal, StyleSheet, Text, Pressable, View, TextInput  } from "react-native";
+import { Alert, Modal, StyleSheet, Text, Pressable, View, TextInput,FlatList,SafeAreaView  } from "react-native";
 import settings from '../../core/settings.json';
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import Buttonc from './Botonnn';
@@ -16,6 +16,7 @@ var arrayId  = new Array();
 var arrayAmount = new Array();
 var tamexs = 0;
 
+var newIngredientsM  = [];
 
 const alertConfirmado = () =>{
 Alert.alert(
@@ -60,7 +61,7 @@ const yaExiste = () =>{
 
 const SolicitarIng = (props) => {
   const [modalVisible, setModalVisible] = useState(false);
-  const [ onChangeText] = React.useState(null);
+
 
   const p = settings.puerto;
   const u = settings.url;
@@ -78,13 +79,15 @@ const SolicitarIng = (props) => {
     setingred(ingredP)
   }
   var arrayNameOrg   = new Array();
-  {
-    ingred.map((ing) => (
 
-arrayNameOrg.push(ing.name) 
-    ))
-  }
-  console.log(arrayNameOrg);
+    ingred.map((ing) => (
+    
+      arrayNameOrg.push(ing.name)
+ 
+
+))
+  
+ 
 
 
 
@@ -116,8 +119,19 @@ else
   console.log(arrayPrice)
   console.log(arrayStock)
 
+
+
   alertConfirmado()
   setModalVisible(!modalVisible)
+
+  newIngredientsM.push({ 
+    "idee"    : tamnew,
+    "amount"    : amountNew.value,
+    "name"    : namess.value,
+    "price"    : priceNew.value,
+    "stock"    : 0,
+});
+
 }
 
 }
@@ -209,6 +223,7 @@ const idChef = await AsyncStorage.getItem("id");
           arrayName.pop()
           arrayPrice.pop()
           arrayStock.pop() 
+          newIngredientsM.pop()
      }
 
      for(var i= 0; i < tamexs; i++) {
@@ -219,11 +234,51 @@ const idChef = await AsyncStorage.getItem("id");
      tamexs=0
   }
 
- 
+  const Item = ({  id, name, price ,amount,idee}) => (
+
+    <View  style={styles.item}>
+      
+      <Text key={id}  style={styles.name3}>Id: {idee}</Text>
+      <Text key={id}  style={styles.name3}>Nombre: {name}</Text>
+      <Text key={id} style={styles.name3}>Precio: {price}</Text>
+      <Text key={id} style={styles.name3}>Cantidad: {amount}</Text>
+      
+      <Buttonc
+        
+        onPress={  async() =>{
+          var pos = 0;
+          for (let i = 0; i < newIngredientsM.length; i++) {
+           if(newIngredientsM[i].idee==idee)
+           {
+            pos = i;
+            i = newIngredientsM.length;
+           }
+            
+          }
+          var nomb = newIngredientsM[pos].name
+          var pos2 = arrayName.indexOf(nomb);
+
+          arrayName.splice(pos2,1);
+          arrayAmountN.splice(pos2,1);
+          arrayPrice.splice(pos2,1);
+          arrayStock.splice(pos2,1);
+         newIngredientsM.splice(pos,1)
+            tamnew--;
+         
+        }}
+        title = "Eliminar"
+
+      />
+
+    </View>
+);
+
+  const renderItem = ({ item }) => (
+    
+    <Item  id={item.id} name={item.name} price={item.price} stock={item.stock} amount={item.amount} idee={item.idee}/>
+);
 
 
-
- 
   
   return (
     <View style={styles.centeredView}>
@@ -301,7 +356,19 @@ const idChef = await AsyncStorage.getItem("id");
        
 
       <Text style={styles.modalText2}>{"\n"}Lista de ingredientes nuevos solicitados{"\n"}{"\n"}</Text>
-
+    
+      <SafeAreaView style={styles.container}>
+      <View style={styles.container2}> 
+      <FlatList
+        data={newIngredientsM}
+        renderItem={renderItem}
+        keyExtractor={(item, index) => index}
+     
+        
+      />
+      </View>
+    </SafeAreaView>
+    
       <Text style={styles.modalText2}>{"\n"}Lista de ingredientes existentes solicitados{"\n"}{"\n"}</Text>
 
       <Buttonc
@@ -328,6 +395,13 @@ const styles = StyleSheet.create({
     alignItems: "center",
     marginTop: 22
   },
+  item: {
+    backgroundColor: '#C3BAB8',
+    padding: 20,
+    marginVertical: 8,
+    marginHorizontal: 16,
+    alignContent: "center",
+  },
   modalView: {
     margin: 20,
     backgroundColor: "white",
@@ -342,6 +416,20 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.25,
     shadowRadius: 4,
     elevation: 5
+  },
+  name3: {
+    fontSize: 16,
+    textAlign: "center",
+  },
+  container: {
+    flex: 1,
+    width: 280, height: 120,
+
+  },
+  container2: {
+    width: 280, height: 220,
+    backgroundColor:"#736969",
+    
   },
   button: {
     borderRadius: 20,
