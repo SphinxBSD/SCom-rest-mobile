@@ -18,9 +18,8 @@ const Stack = createStackNavigator();
 
 export default function App() {
   return (
-    <Waiter/>
 
-   /* <Provider theme={theme}>
+   <Provider theme={theme}>
       <NavigationContainer>
         <Stack.Navigator
           initialRouteName="StartScreen"
@@ -40,6 +39,6 @@ export default function App() {
           />
         </Stack.Navigator>
       </NavigationContainer>
-    </Provider>*/
+    </Provider>
   );
 }
