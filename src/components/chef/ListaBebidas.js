@@ -13,8 +13,8 @@ function platoverf(props) {
       source={{ uri: props.url  }}
       
       style={styles.image} /> 
-      <Text style={styles.name3}> {props.name}</Text>
-  
+      <Text style={styles.name3}>Nombre del producto:</Text>
+      <Text style={styles.name3}>{props.name}</Text>
   
 
     <Buttonc  style={styles.botonchef} onPress={async() => {
@@ -106,11 +106,11 @@ const ListaBebidas = (props) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    width: 200, height: 120,
-
+    width: 230, height: 180,
+    alignSelf:"center",
   },
   container2: {
-    width: 200, height: 220,
+    width: 230, height: 280,
     backgroundColor:"#736969",
   },
   item: {
@@ -133,8 +133,8 @@ const styles = StyleSheet.create({
     textAlign: "center",
   },
   image: {
-    width: 110,
-    height: 110,
+    width: 145,
+    height: 145,
     marginBottom: 8,
     alignContent: "center",
   },

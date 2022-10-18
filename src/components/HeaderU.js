@@ -20,7 +20,7 @@ export default function HeaderU({ navigation  } ) {
         source={require("../assets/back.svg")}
       ></Image>
     </TouchableOpacity>
-    <Text style={styles.text}>{name}</Text>
+    <Text style={styles.text}></Text>
     <Image
         style={styles.image}
         source={require("../assets/icon.svg")}

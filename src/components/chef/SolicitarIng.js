@@ -238,7 +238,7 @@ const idChef = await AsyncStorage.getItem("id");
 
     <View  style={styles.item}>
       
-      <Text key={id}  style={styles.name3}>Id: {idee}</Text>
+      
       <Text key={id}  style={styles.name3}>Nombre: {name}</Text>
       <Text key={id} style={styles.name3}>Precio: {price}</Text>
       <Text key={id} style={styles.name3}>Cantidad: {amount}</Text>
@@ -332,7 +332,7 @@ const idChef = await AsyncStorage.getItem("id");
             >
               <Text style={styles.textStyle}>Solicitar</Text>
             </Pressable>
-            <Text style={styles.textStyle}>{"\n"}</Text>
+            <Text style={styles.textStyle}></Text>
 
 
             <Pressable
@@ -355,7 +355,7 @@ const idChef = await AsyncStorage.getItem("id");
       />
        
 
-      <Text style={styles.modalText2}>{"\n"}Lista de ingredientes nuevos solicitados{"\n"}{"\n"}</Text>
+      <Text style={styles.modalText2}>{"\n"}Lista de ingredientes nuevos solicitados{"\n"}</Text>
     
       <SafeAreaView style={styles.container}>
       <View style={styles.container2}> 
@@ -363,13 +363,15 @@ const idChef = await AsyncStorage.getItem("id");
         data={newIngredientsM}
         renderItem={renderItem}
         keyExtractor={(item, index) => index}
-     
+        horizontal={true}
         
       />
       </View>
     </SafeAreaView>
-    
-      <Text style={styles.modalText2}>{"\n"}Lista de ingredientes existentes solicitados{"\n"}{"\n"}</Text>
+    <Text>{"\n"}</Text>
+    <Text>{"\n"}</Text>
+  
+      <Text style={styles.modalText2}>{"\n"}Lista de ingredientes existentes solicitados{"\n"}</Text>
 
       <Buttonc
         
@@ -423,11 +425,11 @@ const styles = StyleSheet.create({
   },
   container: {
     flex: 1,
-    width: 280, height: 120,
+    width: 280, height: 100,
 
   },
   container2: {
-    width: 280, height: 220,
+    width: 280, height: 160,
     backgroundColor:"#736969",
     
   },
@@ -447,7 +449,7 @@ const styles = StyleSheet.create({
     marginBottom: 3,
   },
   buttonClose2: {
-    backgroundColor: "#FF0000",
+    backgroundColor: "#C3BAB8",
     width: 180,
     marginBottom: 3,
   },

@@ -25,7 +25,7 @@ const Item = ({  id , products,nnn}) => (
 
 
 
-            <Text key={index} style={styles.name}>Producto: {name.nameOrBrand}{"\n"}Cantidad: {name.amount}{"\n"}{"\n"}</Text>
+            <Text key={index} style={styles.name}>Producto: {name.nameOrBrand} Cantidad: {name.amount}</Text>
           
 
           
@@ -35,7 +35,7 @@ const Item = ({  id , products,nnn}) => (
 
   
 
-
+<Text></Text>
   <Buttonc  style={styles.botonchef} onPress={async() => {
   const idd = id;
 
@@ -100,7 +100,7 @@ const nn = props.nav;
         data={menuP}
         renderItem={renderItem}
         keyExtractor={item => item.id}
-      
+        horizontal={true}
       />
       </View>
     </SafeAreaView>
@@ -111,11 +111,11 @@ const nn = props.nav;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    width: 200, height: 120,
-
+    width: 290, height: 140,
+    alignSelf:"center",
   },
   container2: {
-    width: 200, height: 167,
+    width: 290, height: 187,
     alignContent: "center",
     backgroundColor:"#736969",
   },

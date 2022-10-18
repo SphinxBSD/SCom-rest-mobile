@@ -55,7 +55,7 @@ const ListaIngredientes = () => {
         data={menuP}
         renderItem={renderItem}
         keyExtractor={item => item.id}
-      
+        horizontal={true}
       />
       </View>
     </SafeAreaView>
@@ -66,11 +66,11 @@ const ListaIngredientes = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    width: 280, height: 120,
-
+    width: 280, height: 100,
+    alignSelf:"center",
   },
   container2: {
-    width: 280, height: 220,
+    width: 280, height: 115,
     backgroundColor:"#736969",
     
   },
