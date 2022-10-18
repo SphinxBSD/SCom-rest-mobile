@@ -4,11 +4,27 @@ import DrinkCart from "./DrinkCart";
 import FoodCart from "./FoodCart";
 import { Button as PaperButton } from "react-native-paper";
 import RequestStock from "../components/RequestStock";
-export default function NavigatorCart() {
+export default function NavigatorCart(props) {
   const [sw, setSw] = useState(true);
+  const [ped, setPed] = useState(props.ped);
+  const [comida, setComidas] = useState(props.comida);
+  const [bebida, setBebidas] = useState(props.bebida);
+  const [reini, setReini] = useState(false);
+
+  const reiniciar = () => {
+    setReini(true);
+    return reini;
+  };
+
   const show = () => {
-    if (sw) return <FoodCart />;
-    else return <DrinkCart />;
+    console.log(comida);
+    console.log(bebida);
+    if (sw)
+      return <FoodCart comida={comida} setComidas={setComidas} reini={reini} />;
+    else
+      return (
+        <DrinkCart bebida={bebida} setBebidas={setBebidas} reini={reini} />
+      );
   };
 
   const food = () => {
@@ -17,7 +33,6 @@ export default function NavigatorCart() {
 
   const drink = () => {
     setSw(false);
-    console.log(sw);
   };
 
   return (
@@ -40,8 +55,16 @@ export default function NavigatorCart() {
           <Text style={styles.text}>BEBIDAS</Text>
         </PaperButton>
       </View>
-      <RequestStock />
+      <RequestStock
+        comida={comida}
+        bebida={bebida}
+        setComidas={setComidas}
+        setBebidas={setBebidas}
+        ped={ped}
+        reiniciar={reiniciar}
+      />
       {show()}
+      <Text>{console.log(props.ped)}</Text>
     </View>
   );
 }

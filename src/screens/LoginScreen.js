@@ -70,6 +70,7 @@ export default function LoginScreen({ navigation }) {
       if (dataLog.role === "chef") {
         vista = "Chef";
       }
+      setData();
       navigation.reset({
         index: 0,
         routes: [{ name: vista }],
