@@ -3,6 +3,7 @@ import { Alert, Modal, StyleSheet, Text, Pressable, View, TextInput,FlatList,Saf
 import settings from '../../core/settings.json';
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import Buttonc from './Botonnn';
+import { RefreshControl } from "react-native-web";
 
 
 // vectores nuevos ingredientes
@@ -16,7 +17,38 @@ var arrayId  = new Array();
 var arrayAmount = new Array();
 var tamexs = 0;
 
+var tamtot = 0;
+
 var newIngredientsM  = [];
+
+
+
+const solicitudNocomp = () =>{
+  Alert.alert(
+    "Éxito",
+    "Solicitud vacía, ingrese los ingredientes a solicitar",
+    [
+     
+      { text: "OK", onPress: () => console.log("OK Pressed") }
+    ]
+    
+  );
+  console.log("noConfirm")
+  }
+
+
+const solicitudcomp = () =>{
+  Alert.alert(
+    "Éxito",
+    "Se realizó la solicitud de ingredientes correctamente",
+    [
+     
+      { text: "OK", onPress: () => console.log("OK Pressed") }
+    ]
+    
+  );
+  console.log("confirmTot")
+  }
 
 const alertConfirmado = () =>{
 Alert.alert(
@@ -48,6 +80,20 @@ const yaExiste = () =>{
     Alert.alert(
       "Error",
       "No existe este ingrediente, solicitelo desde los nuevos",
+      [
+       
+        { text: "OK", onPress: () => console.log("OK Pressed") }
+      ]
+      
+    );
+    console.log("error inex")
+    }
+
+
+    const eliminado = () =>{
+    Alert.alert(
+      "Error",
+      "Ingrediente eliminado satisfactoriamente de la solicitud",
       [
        
         { text: "OK", onPress: () => console.log("OK Pressed") }
@@ -114,6 +160,7 @@ else
   arrayPrice.push(priceNew.value);
   arrayStock.push(0);
   tamnew++
+  tamtot++
   console.log(arrayName)
   console.log(arrayAmountN)
   console.log(arrayPrice)
@@ -125,7 +172,7 @@ else
   setModalVisible(!modalVisible)
 
   newIngredientsM.push({ 
-    "idee"    : tamnew,
+    "idee"    : tamtot,
     "amount"    : amountNew.value,
     "name"    : namess.value,
     "price"    : priceNew.value,
@@ -146,6 +193,7 @@ const addOld = async () => {
     arrayAmount.push(amountOld.value)
    
     tamexs++
+    tamtot++
     console.log(arrayAmount)
     console.log(arrayId)
  
@@ -153,6 +201,13 @@ const addOld = async () => {
     alertConfirmado()
     setModalVisible(!modalVisible)
     
+    newIngredientsM.push({ 
+      "idee"    : tamtot,
+      "amount"    : amountOld.value,
+      "name"    : nameOld.value,
+      "price"    : null,
+      "stock"    : null,
+  });
   }
 else
 {
@@ -188,8 +243,14 @@ else
 
 const idChef = await AsyncStorage.getItem("id");
 
+if(ingredients.length==0 && newIngredients.length==0)
+{
+  solicitudNocomp()
+}
+else
+{
 
- objeto.chefId = idChef;
+  objeto.chefId = idChef;
   objeto.ingredients = ingredients;
   objeto.newIngredients = newIngredients;
 
@@ -229,54 +290,161 @@ const idChef = await AsyncStorage.getItem("id");
      for(var i= 0; i < tamexs; i++) {
       arrayAmount.pop()
       arrayId.pop()
+      newIngredientsM.pop()
  }
      tamnew=0
      tamexs=0
+     tamtot=0
+
+     solicitudcomp()
+}
+ 
+
+   
   }
 
-  const Item = ({  id, name, price ,amount,idee}) => (
+
+  const Item = ({   id, name, price ,amount,idee, nav}) => (
+
+
+    ingreverf({id:id,name:name,price:price,amount:amount,idee:idee, nav:nav}));
+    
+
+
+    function ingreverf(props) {
+if(props.price==null)
+{
+  return(
+ 
+    
+
+      <View  style={styles.item}>
+        
+        
+        <Text   style={styles.name3}>Nombre: {props.name}</Text>
+        <Text  style={styles.name3}>Cantidad: {props.amount}</Text>
+  
+        
+ 
+        
+      
+        
+        <Buttonc
+          
+          onPress={  async() =>{
+            var pos = 0;
+            for (let i = 0; i < newIngredientsM.length; i++) {
+             if(newIngredientsM[i].idee==props.idee)
+             {
+              pos = i;
+              i = newIngredientsM.length;
+             }
+              
+            }
+            var nomb = newIngredientsM[pos].name
+            var pos2 = arrayNameOrg.indexOf(nomb);
+            pos2++
+            var pos3 = arrayId.indexOf(pos2);
+         
+
+
+            arrayId.splice(pos3,1);
+            arrayAmount.splice(pos3,1);
+  
+            console.log(pos)
+            console.log(newIngredientsM)
+
+           newIngredientsM.splice(pos,1)
+   
+              tamnew--;
+              eliminado()
+
+              let vista = "Chef";
+              props.nav.reset({
+                index: 0,
+                routes: [{ name: vista }],
+              });
+          
+          }}
+          title = "Eliminar"
+  
+        />
+  
+      </View>
+ 
+  );
+}
+else
+{
+  return(
 
     <View  style={styles.item}>
-      
-      
-      <Text key={id}  style={styles.name3}>Nombre: {name}</Text>
-      <Text key={id} style={styles.name3}>Precio: {price}</Text>
-      <Text key={id} style={styles.name3}>Cantidad: {amount}</Text>
-      
-      <Buttonc
         
-        onPress={  async() =>{
-          var pos = 0;
-          for (let i = 0; i < newIngredientsM.length; i++) {
-           if(newIngredientsM[i].idee==idee)
-           {
-            pos = i;
-            i = newIngredientsM.length;
-           }
-            
-          }
-          var nomb = newIngredientsM[pos].name
-          var pos2 = arrayName.indexOf(nomb);
+        
+    <Text  style={styles.name3}>Nombre: {props.name}</Text>
+    <Text  style={styles.name3}>Cantidad: {props.amount}</Text>
 
-          arrayName.splice(pos2,1);
-          arrayAmountN.splice(pos2,1);
-          arrayPrice.splice(pos2,1);
-          arrayStock.splice(pos2,1);
-         newIngredientsM.splice(pos,1)
-            tamnew--;
-         
-        }}
-        title = "Eliminar"
+    
+<Text style={styles.name3}>Precio: {props.price}</Text>
+    
+  
+    
+    <Buttonc
+      
+      onPress={  async() =>{
+        var pos = 0;
+        for (let i = 0; i < newIngredientsM.length; i++) {
+         if(newIngredientsM[i].idee==props.idee)
+         {
+          pos = i;
+          i = newIngredientsM.length;
+         }
+          
+        }
+        var nomb = newIngredientsM[pos].name
+        var pos2 = arrayName.indexOf(nomb);
+        
+      
+   
+        arrayName.splice(pos2,1);
+        arrayAmountN.splice(pos2,1);
+        arrayPrice.splice(pos2,1);
+        arrayStock.splice(pos2,1);
 
-      />
+        console.log(props.idee) 
+        console.log(pos)
+            console.log(newIngredientsM)
 
-    </View>
-);
+       newIngredientsM.splice(pos,1)
+          tamnew--;
+       eliminado()
+
+       let vista = "Chef";
+       props.nav.reset({
+         index: 0,
+         routes: [{ name: vista }],
+       });
+
+      }}
+      title = "Eliminar"
+
+    />
+
+  </View>
+  );
+}
+    }
+
+  
+
+
 
   const renderItem = ({ item }) => (
     
-    <Item  id={item.id} name={item.name} price={item.price} stock={item.stock} amount={item.amount} idee={item.idee}/>
+    <Item  id={item.id} name={item.name} price={item.price} stock={item.stock} amount={item.amount} idee={item.idee} nav={props.nav}/>
 );
+
+
 
 
   
@@ -312,7 +480,7 @@ const idChef = await AsyncStorage.getItem("id");
               onPress={addNew}
             
             >
-              <Text style={styles.textStyle}>Solicitar</Text>
+              <Text style={styles.textStyle2}>Solicitar</Text>
             </Pressable>
 
             <Text style={styles.textStyle}>{"\n"}</Text>
@@ -330,7 +498,7 @@ const idChef = await AsyncStorage.getItem("id");
               onPress={addOld}
             
             >
-              <Text style={styles.textStyle}>Solicitar</Text>
+              <Text style={styles.textStyle2}>Solicitar</Text>
             </Pressable>
             <Text style={styles.textStyle}></Text>
 
@@ -355,7 +523,7 @@ const idChef = await AsyncStorage.getItem("id");
       />
        
 
-      <Text style={styles.modalText2}>{"\n"}Lista de ingredientes nuevos solicitados{"\n"}</Text>
+      <Text style={styles.modalText2}>{"\n"}Lista de ingredientes solicitados{"\n"}</Text>
     
       <SafeAreaView style={styles.container}>
       <View style={styles.container2}> 
@@ -371,7 +539,7 @@ const idChef = await AsyncStorage.getItem("id");
     <Text>{"\n"}</Text>
     <Text>{"\n"}</Text>
   
-      <Text style={styles.modalText2}>{"\n"}Lista de ingredientes existentes solicitados{"\n"}</Text>
+     
 
       <Buttonc
         
@@ -458,6 +626,11 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     textAlign: "center"
   },
+  textStyle2: {
+    color: "black",
+    fontWeight: "bold",
+    textAlign: "center"
+  },
   modalText: {
     fontSize:11,
     marginBottom: 3,
@@ -470,6 +643,7 @@ const styles = StyleSheet.create({
   },
   input: {
     height: 35,
+    width: 200,
     margin: 7,
     borderWidth: 1,
     padding: 10,
