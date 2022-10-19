@@ -1,14 +1,13 @@
 import React, { useState } from "react";
 import Background from "../components/Background";
-import { Image, StyleSheet, View, Text, FlatList } from "react-native";
 import Logo from "../components/Logo";
 import Paragraph from "../components/Paragraph";
 import Button from "../components/Button";
 import HeaderIni from "../components/HeaderIni";
 import NavigatorCart from "../components/NavigatorCart";
+import Pedidos from "../components/Pedidos";
 
 export default function Dashboard({ navigation }) {
-  const [ped, setPed] = useState([]);
   const [comida, setComidas] = useState([]);
   const [bebida, setBebidas] = useState([]);
 
@@ -22,9 +21,8 @@ export default function Dashboard({ navigation }) {
         setComidas={setComidas}
         bebida={bebida}
         setBebidas={setBebidas}
-        ped={ped}
       />
-
+      <Pedidos />
       <Button
         mode="outlined"
         onPress={() =>

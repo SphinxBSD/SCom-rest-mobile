@@ -48,10 +48,11 @@ export default function LoginScreen({ navigation }) {
     if (exito === true) {
       const dataLog = salida.data;
       console.log(dataLog);
+      let aux = dataLog.id.toString();
       const setData = async () => {
         try {
           await AsyncStorage.setItem("role", dataLog.role);
-          await AsyncStorage.setItem("id", dataLog.id);
+          await AsyncStorage.setItem("id", aux);
           await AsyncStorage.setItem("username", name.value);
           console.log(dataLog.role);
           console.log(dataLog.id);

@@ -66,8 +66,9 @@ export default function FoodCart(props) {
 
   const obtenerDatos = async () => {
     const data2 = await fetch(u + p + "/api/foods");
-    const platosP = await data2.json();
 
+    let platosP = await data2.json();
+    platosP = platosP.filter((elem) => elem.available);
     setMenuP(platosP);
 
     const aux = [];

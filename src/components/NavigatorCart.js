@@ -4,12 +4,19 @@ import DrinkCart from "./DrinkCart";
 import FoodCart from "./FoodCart";
 import { Button as PaperButton } from "react-native-paper";
 import RequestStock from "../components/RequestStock";
+import Table from "./Table";
 export default function NavigatorCart(props) {
   const [sw, setSw] = useState(true);
   const [ped, setPed] = useState(props.ped);
   const [comida, setComidas] = useState(props.comida);
   const [bebida, setBebidas] = useState(props.bebida);
   const [reini, setReini] = useState(false);
+
+  const [nroM, setNroM] = useState();
+
+  const setNroMesa = (number) => {
+    setNroM(number);
+  };
 
   const reiniciar = () => {
     setReini(true);
@@ -54,7 +61,9 @@ export default function NavigatorCart(props) {
         >
           <Text style={styles.text}>BEBIDAS</Text>
         </PaperButton>
+        <Table setNroMesa={setNroMesa} />
       </View>
+
       <RequestStock
         comida={comida}
         bebida={bebida}
@@ -62,6 +71,7 @@ export default function NavigatorCart(props) {
         setBebidas={setBebidas}
         ped={ped}
         reiniciar={reiniciar}
+        nroM={nroM}
       />
       {show()}
       <Text>{console.log(props.ped)}</Text>
@@ -71,7 +81,7 @@ export default function NavigatorCart(props) {
 const styles = StyleSheet.create({
   container: {
     width: "100%",
-    backgroundColor: "#0a0a0f",
+    //backgroundColor: "#0a0a0f",
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-around",
