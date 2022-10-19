@@ -22,7 +22,6 @@ export default function RequestStock(props) {
     });
 
     const salida = await response.json();
-    props.ped.push(salida.id);
     console.log(salida);
 
     console.log("XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX");
@@ -32,15 +31,15 @@ export default function RequestStock(props) {
 
   const ordenar = async () => {
     let id = await AsyncStorage.getItem("id");
-    console.log(id);
-    console.log(props.comida);
-    console.log(props.bebida);
-
-    const prods = props.comida.concat(props.bebida);
+    // aqui
+    const prods = props.comida
+      .concat(props.bebida)
+      .filter((elem) => elem.amount > 0);
 
     let pd = {
-      costumer: id,
+      customer: { id: id },
       products: prods,
+      table: { id: props.nroM },
     };
     putData(pd);
     console.log(pd);
