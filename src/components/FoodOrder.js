@@ -1,14 +1,15 @@
 import React from 'react'
+import ListOrders from './ListOrders'
 import {
     StyleSheet,
     View,
     Text,
     ScrollView,
     FlatList,
-  } from "react-native-web";
+  } from "react-native";
   import ListFood from "./ListFood";
 
-function FoodOrder({foods,drinks, flagFood,setCont,cont, id, orders}) {
+function FoodOrder({foods,drinks, flagFood,id, orders}) {
     
   return (
 
@@ -16,10 +17,10 @@ function FoodOrder({foods,drinks, flagFood,setCont,cont, id, orders}) {
         <FlatList
           data={flagFood==="food"? foods:drinks}
           keyExtractor={(item) => item.id}
-          renderItem={(item) => <ListFood item={item.item} setCont={setCont} cont={cont} flagFood={flagFood}  id={id} orders={orders}/>}
+          renderItem={(item) => <ListOrders item={item.item}  flagFood={flagFood}  id={id} orders={orders}/>}
           style={styles.list}
-          horizontal
-        />
+          
+         />
       </View>
 
     
@@ -31,14 +32,12 @@ export default FoodOrder
 const styles = StyleSheet.create({
     container: {
       width: "100%",
-      maxWidth: 340,
+      maxWidth: 350,
       height: "100%",
       padding: 2,
   
     },
     list: {
       width: "100%",
-
-      
     },
   });

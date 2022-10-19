@@ -51,7 +51,9 @@ export default function LoginScreen({ navigation }) {
       const setData = async () => {
         try {
           await AsyncStorage.setItem("role", dataLog.role);
-          await AsyncStorage.setItem("id", dataLog.id);
+          const idd=dataLog.id
+          const idd2=idd.toString()
+          await AsyncStorage.setItem("id", idd2);
           await AsyncStorage.setItem("username", name.value);
         } catch (error) {
           Alert.alert("Error", "No se pudo loguear");

@@ -7,7 +7,7 @@ import {
   Image,
   Text,
   ScrollView,
-} from "react-native-web";
+} from "react-native";
 import ListOrder from "./ListOrder";
 const Order = ({ orders, setOrders, getId, setFlag,flag,handleOnClick,handleOnClickdropOrder,handleOnClickdelivered}) => {
   return (
