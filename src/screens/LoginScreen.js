@@ -53,14 +53,9 @@ export default function LoginScreen({ navigation }) {
       const setData = async () => {
         try {
           await AsyncStorage.setItem("role", dataLog.role);
-<<<<<<< HEAD
-          const idd=dataLog.id
-          const idd2=idd.toString()
-=======
           const idd = dataLog.id;
           const idd2 = idd.toString();
        
->>>>>>> 1e5f355bf17c6f0b4e3e87a4b85754a062344772
           await AsyncStorage.setItem("id", idd2);
           await AsyncStorage.setItem("username", name.value);
           console.log(dataLog.role);
