@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { View, StyleSheet, Text } from "react-native";
+import { View, StyleSheet, Text, Alert } from "react-native";
 import { Button as PaperButton } from "react-native-paper";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import settings from "../core/settings.json";
@@ -42,7 +42,7 @@ export default function RequestStock(props) {
       table: { id: props.nroM },
     };
     putData(pd);
-    console.log(pd);
+    Alert.alert("Exito", "Se realizo la orden!");
   };
   const cancelar = () => {
     props.reiniciar();
