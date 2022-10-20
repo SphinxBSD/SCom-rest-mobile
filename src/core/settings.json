@@ -1,5 +1,7 @@
 {
-  "puerto": "9081",
-  "url": "http://192.168.100.7:",
-  "ignorarMP": "9081"
+  "puerto": "8080",
+  "url": "su ip",
+
+  "ignorarMP": "9081",
+  "urlignorar": "http://192.168.100.7:"
 }
