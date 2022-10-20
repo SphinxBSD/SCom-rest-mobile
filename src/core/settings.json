@@ -1,5 +1,12 @@
 {
   "puerto": "8080",
+<<<<<<< HEAD
   "url": "http://192.168.100.10:",
   "ignorarMP": "8080"
+=======
+  "url": "su ip",
+
+  "ignorarMP": "9081",
+  "urlignorar": "http://192.168.100.7:"
+>>>>>>> 1e5f355bf17c6f0b4e3e87a4b85754a062344772
 }
