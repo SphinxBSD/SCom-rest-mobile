@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { SafeAreaView, View, FlatList, StyleSheet, Text } from 'react-native';
+import { SafeAreaView, View, FlatList, StyleSheet, Text , ScrollView } from 'react-native';
 import settings from '../../core/settings.json';
 
 import Buttonc from './Botonnn';
@@ -16,7 +16,7 @@ const fetchPatchRequest = async (url) => {
 }
 
 const Item = ({  id , products,nnn}) => (
-
+  <ScrollView >
   <View style={styles.item}>
  
     <Text style={styles.name3}>Pedido Nro: {id}</Text>
@@ -62,6 +62,7 @@ const Item = ({  id , products,nnn}) => (
  
  
         </View>
+        </ScrollView >
 );
 
 
@@ -111,13 +112,15 @@ const nn = props.nav;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    width: 290, height: 140,
+    width: 290, height: 180,
     alignSelf:"center",
+   
   },
   container2: {
-    width: 290, height: 187,
+    width: 290, height: 210,
     alignContent: "center",
     backgroundColor:"#736969",
+    overflow: "scroll",
   },
   item: {
     backgroundColor: '#C3BAB8',

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { SafeAreaView, View, FlatList, StyleSheet, Text, StatusBar, Image, Alert } from 'react-native';
+import { SafeAreaView, View, FlatList, StyleSheet, Text,  Image } from 'react-native';
 import settings from '../../core/settings.json';
 
 import Buttonc from './Botonnn';
@@ -57,6 +57,58 @@ function platoverf(props) {
    
   
     </View>);
+  }
+  else
+  {
+      return ( <View style={styles.item}>
+      
+        <Image 
+        source={{ uri: props.url  }}
+        
+        style={styles.image} /> 
+        <Text style={styles.name3}>Nombre del producto:</Text>
+        <Text style={styles.name3}>{props.name}</Text>
+    
+    
+  
+      <Buttonc  style={styles.botonchef} onPress={async() => {
+    const idd = props.id;
+      const deshab = {
+        available: true,
+        id: idd
+      };
+     
+     await fetch(
+        settings.url + settings.puerto + "/api/products/"+idd,
+        {
+          method: 'PATCH',
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(deshab),
+       
+    
+    
+        } ).catch((error) => {
+        console.log(error);
+      });
+  
+      
+        let vista = "Dashboard";
+        vista = "Chef";
+        props.nav.reset({
+          index: 0,
+          routes: [{ name: vista }],
+        });
+      
+    
+      }}
+    
+      title="Habilitar"
+           
+            
+            />
+     
+    
+      </View>);
   }
  
 }
@@ -151,7 +203,8 @@ const styles = StyleSheet.create({
     paddingVertical: 0,
   
  textAlignVertical:"top",
- alignContent:"top",
+ alignContent:"center",
+ alignItems:'center',
     borderColor:'black',
     borderWidth:2,
   

@@ -12,7 +12,7 @@ import {
   Chef,
   AddIngredient,
   Waiter,
-} from "./src/screens";
+} from "./src/screens"; 
 
 
 const Stack = createStackNavigator();

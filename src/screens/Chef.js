@@ -19,25 +19,25 @@ export default function Chef({ navigation }) {
     <ScrollView >
     <Text>{"\n"}</Text>
       <Header style={styles.hed}>Chef</Header>
-      <Paragraph>Pedidos confirmados</Paragraph>
+      <Paragraph style={styles.hed2}>Pedidos confirmados</Paragraph>
             <ListaOrdenes nav={navigation}/>
                   <Text>{"\n"}</Text>
                  
-      <Paragraph>{"\n"}Gestionar platos</Paragraph>
+      <Paragraph style={styles.hed2}>{"\n"}Gestionar platos</Paragraph>
             <ListaPlatos nav={navigation}/>
             <Text>{"\n"}</Text>
             <Text>{"\n"}</Text>
             <Text></Text>
-      <Paragraph>{"\n"}Gestionar bebidas</Paragraph>
+      <Paragraph style={styles.hed2}>{"\n"}Gestionar bebidas</Paragraph>
             <ListaBebidas nav={navigation}/>
             <Text>{"\n"}</Text>
             <Text>{"\n"}</Text>
             <Text>{"\n"}</Text>
-      <Paragraph>{"\n"}Gestionar ingredientes</Paragraph>
+      <Paragraph style={styles.hed2}>{"\n"}Gestionar ingredientes</Paragraph>
         
 <SolicitarIng nav={navigation}/>
 
-<Paragraph>{"\n"}Lista de ingredientes</Paragraph>
+<Paragraph style={styles.hed2}>{"\n"}Lista de ingredientes</Paragraph>
             <ListaIngredientes nav={navigation}/>
 
       <Text>{"\n"}</Text>
@@ -82,8 +82,15 @@ const styles = StyleSheet.create({
   hed: {
     textAlign:"center",
     fontSize:30,
-  },
 
+    
+  },
+  hed2: {
+    textAlign:"center",
+    fontSize:25,
+
+    boxShadow:5,
+  },
  
 
 });

@@ -40,7 +40,7 @@ export default function Pedidos() {
   return (
     <View style={styles.container}>
       <TouchableOpacity onPress={ordenes} style={styles.btn}>
-        <Text>Nro de pedido(s): </Text>
+        <Text>Pedido(s) solicitado(s): </Text>
       </TouchableOpacity>
       <Text>{texto}</Text>
     </View>
