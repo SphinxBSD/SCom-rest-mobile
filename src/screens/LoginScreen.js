@@ -12,6 +12,7 @@ import { passwordValidator } from "../helpers/passwordValidator";
 import { nameValidator } from "../helpers/nameValidator";
 import settings from "../core/settings.json";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { stringify } from "querystring";
 
 export default function LoginScreen({ navigation }) {
   const [name, setName] = useState({ value: "", error: "" });
@@ -52,7 +53,10 @@ export default function LoginScreen({ navigation }) {
       const setData = async () => {
         try {
           await AsyncStorage.setItem("role", dataLog.role);
-          await AsyncStorage.setItem("id", aux);
+          const idd = dataLog.id;
+          const idd2 = idd.toString();
+       
+          await AsyncStorage.setItem("id", idd2);
           await AsyncStorage.setItem("username", name.value);
           console.log(dataLog.role);
           console.log(dataLog.id);
@@ -78,7 +82,6 @@ export default function LoginScreen({ navigation }) {
       });
     } else Alert.alert("Aviso", "El usuario no se encuentra registrado!");
   };
-
   return (
     <Background>
       <BackButton goBack={navigation.goBack} />
@@ -120,6 +123,8 @@ const styles = StyleSheet.create({
     width: "100%",
     alignItems: "flex-end",
     marginBottom: 24,
+
+    
   },
   row: {
     flexDirection: "row",
