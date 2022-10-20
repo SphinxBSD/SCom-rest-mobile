@@ -110,7 +110,7 @@ export default function Waiter({ navigation }) {
   const getDatas = async () => {
     const options = { method: "GET" };
     let url =
-      settings.url + settings.puerto + "/api/waiters/" + 16 + "/orders/pending";
+      settings.url + settings.puerto + "/api/waiters/" + ( await AsyncStorage.getItem("id")) + "/orders/pending";
     console.log(url);
     const response = await fetch(url, options);
     const data = await response.json();
@@ -145,7 +145,7 @@ export default function Waiter({ navigation }) {
       settings.url +
       settings.puerto +
       "/api/waiters/" +
-      16 +
+      ( await AsyncStorage.getItem("id")) +
       "/orders/all-prepared";
     const response = await fetch(url, options);
     const data = await response.json();
