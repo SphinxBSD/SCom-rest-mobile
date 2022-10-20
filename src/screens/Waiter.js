@@ -1,8 +1,15 @@
 import React, { useEffect, useState } from "react";
-import Header from "../components/HeaderU";
+import Background from "../components/Background";
+import Logo from "../components/Logo";
+import Button from "../components/Button";
 import Order from "../components/Order";
+import FoodOrder from "../components/FoodOrder";
 import settings from "../core/settings.json";
+import Header from "../components/HeaderU";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import update from "../assets/update.png";
+import food from "../assets/food.png";
+import drink from "../assets/drink.png";
 import {
   StyleSheet,
   View,
@@ -11,8 +18,7 @@ import {
   Text,
   ScrollView,
   Alert,
-} from "react-native-web";
-import FoodOrder from "../components/FoodOrder";
+} from "react-native";
 
 export default function Waiter({ navigation }) {
   const [orders, setOrders] = useState([]);
@@ -22,57 +28,90 @@ export default function Waiter({ navigation }) {
   const [drinks, setDrinks] = useState([]);
   const [foodP, setFoodP] = useState([]);
   const [cont, setCont] = useState(0);
-  
 
-
-  const deleteData = async (id ) =>{
-    let url = settings.url + settings.puerto + "/api/orders/"+id;
+  const deleteData = async (id) => {
+    let url = settings.url + settings.puerto + "/api/orders/" + id;
     const response = await fetch(url, {
-        method: 'DELETE'
+      method: "DELETE",
     });
- 
-   const data = await response.json( );
-    console.log(data);
 
- };
+    const data = await response.json();
+    console.log(data);
+  };
   const handleOnClickdropOrder = (id) => {
-    
-    deleteData(id);
-    (async()=>{
-      await getDatas();
-    })();
-    console.log("id" + id);
+    Alert.alert("Alerta", "¿Estás seguro de eliminar el pedido " + id + " ?", [
+      {
+        text: "Cancel",
+        onPress: () => console.log("Cancel Pressed"),
+        style: "cancel",
+      },
+      {
+        text: "OK",
+        onPress: () => {
+          deleteData(id);
+          getDatas();
+        },
+      },
+    ]);
   };
 
   const fetchPatchRequest = async (url) => {
     const response = await fetch(url, {
-        method: 'PATCH',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(null),
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(null),
     });
     return response.json();
-}
+  };
 
+  const handleOnClickdelivered = (id) => {
+    let url =
+      settings.url +
+      settings.puerto +
+      "/api/orders/" +
+      id +
+      "?flag=delivered&value=true";
 
-const handleOnClickdelivered = (id) => {
-  let url = settings.url + settings.puerto + "/api/orders/"+id+"?flag=delivered&value=true";
-  fetchPatchRequest(url);
-};
+    Alert.alert("Alerta", "¿Estás seguro de entregar el pedido " + id + " ?", [
+      {
+        text: "Cancel",
+        onPress: () => console.log("Cancel Pressed"),
+        style: "cancel",
+      },
+      { text: "OK", onPress: () => fetchPatchRequest(url) },
+    ]);
+  };
 
   const handleOnClickConfirOrder = (id) => {
-    let url = settings.url + settings.puerto + "/api/orders/"+id+"?flag=confirmed&value=true";
-    fetchPatchRequest(url);
-    console.log("hola");
-    console.log("id" + id);
-    setFlag(true)
-
+    let url =
+      settings.url +
+      settings.puerto +
+      "/api/orders/" +
+      id +
+      "?flag=confirmed&value=true";
+    Alert.alert("Alerta", "¿Estás seguro de confirmar el pedido " + id + " ?", [
+      {
+        text: "Cancel",
+        onPress: () => console.log("Cancel Pressed"),
+        style: "cancel",
+      },
+      {
+        text: "OK",
+        onPress: () => {
+          fetchPatchRequest(url);
+          setFlag(true);
+        },
+      },
+    ]);
   };
 
   const getDatas = async () => {
     const options = { method: "GET" };
-    let url = settings.url + settings.puerto + "/api/waiters/"+( await AsyncStorage.getItem("id"))+"/orders/pending";
+    let url =
+      settings.url + settings.puerto + "/api/waiters/" + ( await AsyncStorage.getItem("id")) + "/orders/pending";
+    console.log(url);
     const response = await fetch(url, options);
     const data = await response.json();
 
@@ -102,7 +141,12 @@ const handleOnClickdelivered = (id) => {
 
   const getFoodP = async () => {
     const options = { method: "GET" };
-    let url = settings.url + settings.puerto + "/api/waiters/"+( await AsyncStorage.getItem("id"))+"/orders/all-prepared";
+    let url =
+      settings.url +
+      settings.puerto +
+      "/api/waiters/" +
+      ( await AsyncStorage.getItem("id")) +
+      "/orders/all-prepared";
     const response = await fetch(url, options);
     const data = await response.json();
 
@@ -110,14 +154,11 @@ const handleOnClickdelivered = (id) => {
     setFoodP(data);
   };
 
-  
-
   useEffect(() => {
     getDatas();
     getFoods();
     getDrinks();
     getFoodP();
-
   }, []);
 
   const [id, setId] = useState(null);
@@ -132,64 +173,59 @@ const handleOnClickdelivered = (id) => {
       let datosFil = orders.filter(function (e) {
         return e.id === id;
       });
-      console.log(datosFil)
+      console.log(datosFil);
       return <Text> pedido{id}</Text>;
-      
-    } 
+    }
   };
   return (
-    <>
+    <View style={styles.containerPhone}>
       <Header navigation={navigation}></Header>
-      <View style={styles.containerPhone}>
-        <View style={styles.containerButon}>
-          <TouchableOpacity onPress={() => getDatas()}>
-            <Image
-              style={styles.image}
-              source={require("../assets/update.png")}
-            ></Image>
+      <View style={styles.containerButon}>
+        <TouchableOpacity onPress={() => getDatas()}>
+          <Image style={styles.image} source={update} />
+        </TouchableOpacity>
+      </View>
+      <Text style={styles.title}>PEDIDOS</Text>
+      <Order
+        orders={orders}
+        setOrders={setOrders}
+        getId={getId}
+        setFlag={setFlag}
+        flag={true}
+        handleOnClick={handleOnClickConfirOrder}
+        handleOnClickdropOrder={handleOnClickdropOrder}
+      ></Order>
+
+      <View style={styles.container}>
+        <View style={styles.containerPedido}>
+          <Text style={styles.title}>PEDIDO {id}</Text>
+          <TouchableOpacity
+            onPress={() => {
+              setflagFood("food");
+            }}
+          >
+            <Image style={styles.imageP} source={food}></Image>
+          </TouchableOpacity>
+          <TouchableOpacity onPress={() => setflagFood("drink")}>
+            <Image style={styles.imageP} source={drink}></Image>
+          </TouchableOpacity>
+
+          <TouchableOpacity onPress={() => {getDrinks();getFoods()}}>
+            <Image style={styles.image} source={update} />
           </TouchableOpacity>
         </View>
-        <Text style={styles.title}>PEDIDOS</Text>
-        <Order
-          orders={orders}
-          setOrders={setOrders}
-          getId={getId}
-          setFlag={setFlag}
-          flag={true}
-          handleOnClick={handleOnClickConfirOrder}
-          handleOnClickdropOrder={handleOnClickdropOrder}
-        ></Order>
-
-
-        <View style={styles.container}>
-
-          <View style={styles.containerPedido}>
-
-            <Text style={styles.title}>PEDIDO {id}</Text>
-            <TouchableOpacity onPress={() =>{setflagFood("food");}}>
-              <Image
-                style={styles.imageP}
-                source={require("../assets/food.png")}
-              ></Image>
-            </TouchableOpacity>
-            <TouchableOpacity onPress={() => setflagFood("drink")}>
-              <Image
-                style={styles.imageP}
-                source={require("../assets/drink.png")}
-              ></Image>
-            
-            </TouchableOpacity>
-          </View>
-          <View style={styles.containerOrder}>
-            <FoodOrder foods={foods} drinks={drinks} flagFood={flagFood} setCont={setCont} cont={cont}  id={id} orders={orders}/>
-          </View>
+        <View style={styles.containerOrder}>
+          <FoodOrder
+            foods={foods}
+            drinks={drinks}
+            flagFood={flagFood}
+            id={id}
+            orders={orders}
+          />
         </View>
         <View style={styles.containerButon}>
           <TouchableOpacity onPress={() => getFoodP()}>
-            <Image
-              style={styles.image}
-              source={require("../assets/update.png")}
-            ></Image>
+            <Image style={styles.image} source={update}></Image>
           </TouchableOpacity>
         </View>
         <Text style={styles.title}>PEDIDOS A ENTREGAR</Text>
@@ -202,22 +238,23 @@ const handleOnClickdelivered = (id) => {
           handleOnClickdelivered={handleOnClickdelivered}
         ></Order>
       </View>
-    </>
+    </View>
   );
-} 
+}
 const styles = StyleSheet.create({
   containerPhone: {
     backgroundColor: "#FDFEFE",
     width: "100%",
-    maxWidth: 340,
     alignSelf: "center",
-    padding: 5,
-    height: "93%",
+    paddingTop: 15,
+    height: "100%",
+    flex: 1,
+    maxWidth: 400,
   },
   container: {
     backgroundColor: "#FDFEFE",
     width: "100%",
-    maxWidth: 340,
+    maxWidth: 400,
     height: "35%",
     padding: 5,
     marginTop: 10,
@@ -250,9 +287,11 @@ const styles = StyleSheet.create({
   containerOrder: {
     flexDirection: "row",
     width: "100%",
+    maxWidth: 350,
     backgroundColor: "#24252A",
     borderRadius: 10,
-
+    height: 165,
+    alignSelf: "center",
+    alignItems: "center",
   },
-
 });

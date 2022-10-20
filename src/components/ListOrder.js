@@ -1,4 +1,8 @@
 import React from "react";
+import show from '../assets/show.png'
+import trash from '../assets/trash.png'
+import send from '../assets/send.png'
+import deliver from '../assets/deliver.png'
 import {
   StyleSheet,
   View,
@@ -6,7 +10,7 @@ import {
   Image,
   Text,
   Alert,
-} from "react-native-web";
+} from "react-native";
 
 const ListOrder = ({ item, getId, setFlag, flag,handleOnClick ,handleOnClickdropOrder,handleOnClickdelivered}) => {
   const getContent = () => {
@@ -16,19 +20,19 @@ const ListOrder = ({ item, getId, setFlag, flag,handleOnClick ,handleOnClickdrop
          <TouchableOpacity  onPress={() =>getId(item.id)} >
             <Image
               style={styles.image}
-              source={require("../assets/show.svg")}
+              source={show}
             ></Image>
           </TouchableOpacity>
           <TouchableOpacity  onPress={() =>handleOnClickdropOrder(item.id)} >
             <Image
               style={styles.image}
-              source={require("../assets/trash.svg")}
+              source={trash}
             ></Image>
           </TouchableOpacity>
           <TouchableOpacity onPress={() =>{ handleOnClick(item.id)}}>
             <Image
               style={styles.image}
-              source={require("../assets/send.svg")}
+              source={send}
             ></Image>
           </TouchableOpacity>
         </>
@@ -38,7 +42,7 @@ const ListOrder = ({ item, getId, setFlag, flag,handleOnClick ,handleOnClickdrop
         <TouchableOpacity onPress={() => handleOnClickdelivered(item.id)}>
           <Image
             style={styles.image}
-            source={require("../assets/deliver.png")}
+            source={deliver}
           ></Image>
         </TouchableOpacity>
       );

@@ -32,7 +32,6 @@ const styles = StyleSheet.create({
     width: "100%",
   },
   cuisine: {
-    fontFamily: "Courier",
     fontWeight: "bold",
     fontSize: 20,
   },
