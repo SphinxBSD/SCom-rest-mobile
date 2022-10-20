@@ -49,6 +49,7 @@ export default function LoginScreen({ navigation }) {
     if (exito === true) {
       const dataLog = salida.data;
       console.log(dataLog);
+      let aux = dataLog.id.toString();
       const setData = async () => {
         try {
           await AsyncStorage.setItem("role", dataLog.role);
@@ -57,6 +58,8 @@ export default function LoginScreen({ navigation }) {
        
           await AsyncStorage.setItem("id", idd2);
           await AsyncStorage.setItem("username", name.value);
+          console.log(dataLog.role);
+          console.log(dataLog.id);
         } catch (error) {
           Alert.alert("Error", "No se pudo loguear");
           console.log(error);
@@ -72,13 +75,11 @@ export default function LoginScreen({ navigation }) {
       if (dataLog.role === "chef") {
         vista = "Chef";
       }
-      setData()
+      setData();
       navigation.reset({
         index: 0,
         routes: [{ name: vista }],
       });
-
-      
     } else Alert.alert("Aviso", "El usuario no se encuentra registrado!");
   };
   return (

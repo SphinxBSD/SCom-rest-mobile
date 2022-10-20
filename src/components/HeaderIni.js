@@ -10,12 +10,7 @@ export default function HeaderIni() {
         style={styles.image}
         source={require("../assets/temporal/iconIni.png")}
       />
-      <SearchBar
-        style={styles.search}
-        lightTheme
-        round
-        placeholder="Escriba aqui..."
-      />
+      <Text style={styles.cuisine}>Cuisine</Text>
     </View>
   );
 }
@@ -35,5 +30,10 @@ const styles = StyleSheet.create({
   },
   search: {
     width: "100%",
+  },
+  cuisine: {
+    fontFamily: "Courier",
+    fontWeight: "bold",
+    fontSize: 20,
   },
 });

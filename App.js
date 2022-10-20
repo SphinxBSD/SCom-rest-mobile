@@ -20,7 +20,7 @@ const Stack = createStackNavigator();
 export default function App() {
   return (
 
-    <Provider theme={theme}>
+   <Provider theme={theme}>
       <NavigationContainer>
         <Stack.Navigator
           initialRouteName="StartScreen"

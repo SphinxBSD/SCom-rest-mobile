@@ -181,7 +181,7 @@ const handleOnClickdelivered = (id) => {
             </TouchableOpacity>
           </View>
           <View style={styles.containerOrder}>
-            <FoodOrder foods={foods} drinks={drinks} flagFood={flagFood} setCont={setCont} cont={cont}  id={id}/>
+            <FoodOrder foods={foods} drinks={drinks} flagFood={flagFood} setCont={setCont} cont={cont}  id={id} orders={orders}/>
           </View>
         </View>
         <View style={styles.containerButon}>
